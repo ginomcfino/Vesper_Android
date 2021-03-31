@@ -17,6 +17,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Custom Library for HTTP Restful Connections. Simplifies using Volley
+ */
 public class HttpConnectionLibrary {
     private static String TAG = "HttpConnectionLibrary";
     private static RequestQueue requestQueue;
