@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "773584387319",
+    "project_id": "cs501-2-api-research",
+    "storage_bucket": "cs501-2-api-research.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773584387319:android:4b1cb943f1d02d626f27f2",
+        "android_client_info": {
+          "package_name": "com.company.api_research"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773584387319-6kmivoi0e7sub69o0calb9ifk56d25aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdssInMIxiPgz6ptnEu6YvspoumMWK1NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773584387319-6kmivoi0e7sub69o0calb9ifk56d25aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773584387319:android:b473c67d1eb2a01e6f27f2",
+        "android_client_info": {
+          "package_name": "com.company.vesper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773584387319-6kmivoi0e7sub69o0calb9ifk56d25aj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdssInMIxiPgz6ptnEu6YvspoumMWK1NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773584387319-6kmivoi0e7sub69o0calb9ifk56d25aj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
