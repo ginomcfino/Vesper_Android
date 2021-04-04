@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Vesper_App</string>
     <string name="pull">pull</string>
-    <string name="yahoonews">YahooNews</string>
+    <string name="yahoonews">YahooNews (Test)</string>
+    <string name="GET">GET REQ</string>
+    <string name="AV">AlphaVantage (test)</string>
 </resources>
