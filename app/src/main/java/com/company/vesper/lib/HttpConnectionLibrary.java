@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -30,12 +31,12 @@ public class HttpConnectionLibrary {
     }
 
     /**
-     * Sends a GET request using Volley.
+     * Sends a GET request using Volley. Response type is a String
      *
      * @param requestURL Target URL of the GET request
      * @param callback   callback function when response is returned. Best used in lambda format "(response: String) -> {}"
      */
-    public static void sendGET(String requestURL, getListener callback) {
+    public static void sendGET(String requestURL, getStringListener callback) {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, response -> {
             if (callback != null) {
@@ -46,8 +47,29 @@ public class HttpConnectionLibrary {
 
         // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
-        requestQueue.start();
     }
+
+    /**
+     * Sends a GET request using Volley. Response type is a JSONObject
+     *
+     * @param requestURL Target URL of the GET request
+     * @param callback   callback function when response is returned. Best used in lambda format "(response: JSONObject) -> {}"
+     */
+    public static void sendGET(String requestURL, JSONObject jsonRequest, getJsonListener callback) {
+        // Request a string response from the provided URL.
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, requestURL, jsonRequest, response -> {
+            if (callback != null) {
+                callback.callback(response);
+            }
+        }, error -> {
+        });
+
+        // Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+    }
+
+
+
 
     /**
      * Send a POST request using Volley. Use when don't need to listen to POST response.
@@ -124,8 +146,12 @@ public class HttpConnectionLibrary {
         void callback(Response<String> response);
     }
 
-    public interface getListener {
+    public interface getStringListener {
         void callback(String response);
+    }
+
+    public interface getJsonListener {
+        void callback(JSONObject response);
     }
 
 }
