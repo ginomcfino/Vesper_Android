@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.company.vesper.databinding.ActivityMainBinding;
 import com.company.vesper.services.AlphaVantage;
 import com.company.vesper.services.YahooNewsActivity;
 
@@ -15,26 +16,19 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
 
-    Button btnYahooNews;
-    Button btnAlphaVantage;
+
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        btnYahooNews = findViewById(R.id.btnYahooNews);
-        btnAlphaVantage = findViewById(R.id.btnAlphaVantage);
 
-        btnYahooNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent ynIntent = new Intent(MainActivity.this, YahooNewsActivity.class);
-                MainActivity.this.startActivity(ynIntent);
-            }
-        });
+        binding.btnYahooNews.setOnClickListener(view -> YahooNewsActivity.getNews(response -> binding.webView.loadUrl(response)));
 
-        btnAlphaVantage.setOnClickListener(new View.OnClickListener() {
+        binding.btnAlphaVantage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent avIntent = new Intent(MainActivity.this, AlphaVantage.class);

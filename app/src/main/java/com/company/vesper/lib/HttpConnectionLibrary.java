@@ -26,43 +26,34 @@ public class HttpConnectionLibrary {
 
     public static void init(Context context) {
         requestQueue = Volley.newRequestQueue(context);
+//        requestQueue.start();
     }
 
     /**
      * Sends a GET request using Volley.
+     *
      * @param requestURL Target URL of the GET request
-     * @param callback callback function when response is returned. Best used in lambda format "(response: String) -> {}"
+     * @param callback   callback function when response is returned. Best used in lambda format "(response: String) -> {}"
      */
-    public static void sendGET(String requestURL, ResponseListener callback) {
+    public static void sendGET(String requestURL, getListener callback) {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, requestURL, response -> {
-        }, error -> {
-        }) {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                if (callback == null) {
-                    return null;
-                }
-
-                String responseString = "";
-                if (response != null) {
-                    responseString = String.valueOf(response.statusCode);
-                    // can get more details such as response.headers
-                }
-
-                callback.callback(Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response)));
-                return null;
+            if (callback != null) {
+                callback.callback(response);
             }
-        };
+        }, error -> {
+        });
 
         // Add the request to the RequestQueue.
         requestQueue.add(stringRequest);
+        requestQueue.start();
     }
 
     /**
      * Send a POST request using Volley. Use when don't need to listen to POST response.
+     *
      * @param requestURL Target URL of the POST request
-     * @param params HashMap of the params to be encoded in the POST body
+     * @param params     HashMap of the params to be encoded in the POST body
      */
     public static void sendPOST(String requestURL, HashMap<String, String> params) {
         sendPOST(requestURL, params, null);
@@ -70,12 +61,13 @@ public class HttpConnectionLibrary {
 
     /**
      * Send a POST request using Volley. Use when need to subscribe to POST response.
+     *
      * @param requestURL Target URL of the POST request
-     * @param params HashMap of the params to be encoded in the POST body
-     * @param callback callback function when response is returned. Best used in lambda format "(response: String) -> {}"
+     * @param params     HashMap of the params to be encoded in the POST body
+     * @param callback   callback function when response is returned. Best used in lambda format "(response: String) -> {}"
      */
     public static void sendPOST(String requestURL,
-                                HashMap<String, String> params, ResponseListener callback) {
+                                HashMap<String, String> params, postListener callback) {
 
         JSONObject jsonBody = new JSONObject();
 
@@ -128,8 +120,12 @@ public class HttpConnectionLibrary {
         requestQueue.add(stringRequest);
     }
 
-    public interface ResponseListener {
+    public interface postListener {
         void callback(Response<String> response);
+    }
+
+    public interface getListener {
+        void callback(String response);
     }
 
 }
