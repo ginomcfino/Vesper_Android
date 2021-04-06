@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class AlphaVantage {
 
 
-    private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact";
+        private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_INTRADAY&symbol=TSLA&interval=5min&outputsize=compact";
     /*
     Uses Volley to make GET request with http REST interface
      */
