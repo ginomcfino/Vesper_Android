@@ -18,6 +18,7 @@ public class App extends Application {
 
         _instance = this;
         HttpConnectionLibrary.init(this);
+        State.init();
     }
 
     public static Context getContext() {

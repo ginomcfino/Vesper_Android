@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignupActivity">
+
 
     <EditText
         android:id="@+id/edtEmail"
@@ -30,17 +31,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
 
+    <EditText
+        android:id="@+id/edtPasswordConfirm"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:ems="10"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtEmail" />
+
     <Button
         android:id="@+id/btnSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/action_sign_in_short"
+        android:layout_marginTop="40dp"
+        android:onClick="signup"
+        android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPassword"
-        android:onClick="login"/>
+        app:layout_constraintTop_toBottomOf="@+id/edtPasswordConfirm" />
 
     <TextView
         android:id="@+id/txtLogin"
@@ -48,15 +62,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:clickable="true"
-        android:onClick="switchToSignup"
-        android:text="@string/ask_to_signup"
+        android:onClick="switchToLogin"
+        android:text="@string/ask_to_login"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignup"
         app:layout_constraintVertical_bias="0.823" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
