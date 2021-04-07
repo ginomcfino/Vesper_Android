@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     setCurrentFragment(new SettingsFragment());
                     break;
             }
-            return false;
+            return true;
         });
 
 //
