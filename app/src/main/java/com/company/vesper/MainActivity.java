@@ -13,10 +13,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.CartesianSeriesLine;
+import com.anychart.anychart.DataEntry;
+import com.anychart.anychart.Mapping;
+import com.anychart.anychart.Set;
+import com.anychart.anychart.ValueDataEntry;
 import com.company.vesper.databinding.ActivityMainBinding;
 import com.company.vesper.services.AlphaVantage;
 import com.company.vesper.services.YahooNewsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
@@ -49,17 +60,42 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+
+
 //
 //        binding.btnYahooNews.setOnClickListener(view -> YahooNewsActivity.getNews(response -> binding.webView.loadUrl(response)));
 //
-//        binding.btnAlphaVantage.setOnClickListener(v -> AlphaVantage.sendAndRequestResponse(response -> {
-//            //response is stored as a JSON object, which can be parsed and utilized with JSONParser
-//            Log.i(TAG, "JSON Response: \n" + response.toString());
-//
-//            //currently shows the returned JSON as a toast to show that it is received correctly
-//            //TODO: Make stock chart functions, connect to visual UI
-//            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
-//        }));
+        /**
+        binding.btnAlphaVantage.setOnClickListener(v -> AlphaVantage.sendAndRequestResponse(response -> {
+            //response is stored as a JSON object, which can be parsed and utilized with JSONParser
+            Log.i(TAG, "JSON Response: \n" + response.toString());
+
+            //currently shows the returned JSON as a toast to show that it is received correctly
+            //TODO: Make stock chart functions, connect to visual UI
+            Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+        }));**/
+        /**binding.btnAlphaVantage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+        AlphaVantage.getHistoricalStockData("TSLA", results -> {
+
+        test = (List<Double>) results;
+        Log.d("TESTING",Integer.toString(test.size()));
+
+        Cartesian cartesian = AnyChart.line();
+
+        List<DataEntry> seriesData = new ArrayList<>();
+        for(int i=0;i<test.size();i++){
+
+        seriesData.add(new ValueDataEntry("1",test.get(i)));
+        }
+
+        CartesianSeriesLine t = cartesian.line(seriesData);
+        cartesian.setContainer("Container");
+        anyChartView.setChart(cartesian);
+
+                });
+            }**/
     }
 
     protected void setCurrentFragment(Fragment fragment) {

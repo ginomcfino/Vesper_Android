@@ -2,12 +2,25 @@ package com.company.vesper;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.DataEntry;
+import com.anychart.anychart.Pie;
+import com.anychart.anychart.ValueDataEntry;
 import com.company.vesper.databinding.FragmentHomeBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +69,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -63,6 +77,24 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
+
+        //View view = binding.getRoot();
+
+        //AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
+        AnyChartView anyChartView = binding.anyChartView;
+
+        Cartesian cartesian = AnyChart.line();
+
+        List<DataEntry> seriesData = new ArrayList<>();
+        seriesData.add(new ValueDataEntry("1986", 3.6));
+        seriesData.add(new ValueDataEntry("1987", 3));
+        seriesData.add(new ValueDataEntry("1988", 2));
+
+        cartesian.line(seriesData);
+        anyChartView.setChart(cartesian);
+
+
         return binding.getRoot();
     }
+
 }
