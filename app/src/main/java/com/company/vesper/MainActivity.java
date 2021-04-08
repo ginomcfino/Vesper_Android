@@ -13,14 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.anychart.anychart.AnyChart;
-import com.anychart.anychart.AnyChartView;
-import com.anychart.anychart.Cartesian;
-import com.anychart.anychart.CartesianSeriesLine;
-import com.anychart.anychart.DataEntry;
-import com.anychart.anychart.Mapping;
-import com.anychart.anychart.Set;
-import com.anychart.anychart.ValueDataEntry;
 import com.company.vesper.databinding.ActivityMainBinding;
 import com.company.vesper.services.AlphaVantage;
 import com.company.vesper.services.YahooNewsActivity;
