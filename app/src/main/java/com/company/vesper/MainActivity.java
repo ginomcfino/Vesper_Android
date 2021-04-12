@@ -44,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Switch the currently loaded fragment to a new one (maintains the same window)
+     * @param fragment New fragment be instantiated. (The actual fragment object and not just the class)
+     */
     protected void setCurrentFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         transaction.replace(R.id.fl_wrapper, fragment, null);
 
         transaction.commit();
-
     }
 }
 

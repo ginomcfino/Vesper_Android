@@ -11,11 +11,13 @@
         android:id="@+id/txtGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="24dp"
-        android:text="Group Name Here" />
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Group Name Here"
+        android:textSize="24sp" />
 
     <ListView
         android:id="@+id/listMessages"

@@ -19,6 +19,9 @@ import com.company.vesper.databinding.ChatMessageLayoutRegularBinding;
 
 import java.util.List;
 
+/**
+ * Adapter used for ListView in Chat to display messages
+ */
 public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     private static String TAG = ChatMessageAdapter.class.getName();
 

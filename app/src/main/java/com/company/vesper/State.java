@@ -1,11 +1,15 @@
 package com.company.vesper;
 
+import android.icu.number.NumberFormatter;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +82,7 @@ public class State {
         FirebaseUser user;
         String display_name;
         String email;
-        List<String> groups;
+        List<GroupInfo> groups;
 
         UserInfo(FirebaseUser user) {
             this.user = user;
@@ -92,14 +96,23 @@ public class State {
                 DocumentSnapshot snapshot = t.getResult();
                 display_name = snapshot.getString("displayName");
                 email = snapshot.getString("email");
-                groups = (List<String>) snapshot.get("groups");
-
-
-                // TODO fix this, we currently just load in the first group of a user. What to do if there is no groups?
-                State.getDatabase().collection("groups").document(groups.get(0)).get().addOnCompleteListener(task -> {
-                    DocumentSnapshot groupSnapshot = task.getResult();
-                    group = new GroupInfo(groupSnapshot);
-                });
+                List<DocumentReference> groupRefs = (List<DocumentReference>) snapshot.get("groups");
+                groups = new ArrayList<>();
+                for (int i = 0; i < groupRefs.size(); i++) {
+                    DocumentReference docs = groupRefs.get(i);
+                    int finalI = i;
+                    docs.get().addOnCompleteListener(task -> {
+                        DocumentSnapshot ss = t.getResult();
+                        groups.add(new GroupInfo(ss.getString("name"), ss.getId()));
+                        if (finalI == 0) {
+                            // TODO fix this, we currently just load in the first group of a user. What to do if there is no groups?
+                            State.getDatabase().collection("groups").document(groups.get(0).groupID).get().addOnCompleteListener(groupTask -> {
+                                DocumentSnapshot groupSnapshot = groupTask.getResult();
+                                group = new GroupInfo(groupSnapshot);
+                            });
+                        }
+                    });
+                }
             });
 
             // TODO check if current user is the same as the previously logged in person.
@@ -112,6 +125,10 @@ public class State {
         public String getName() {
             return display_name;
         }
+
+        public List<GroupInfo> getGroups() {
+            return groups;
+        }
     }
 
     public static class GroupInfo {
@@ -119,6 +136,11 @@ public class State {
         String groupID;
         String signaler;
         List<String> members;
+
+        GroupInfo(String name, String ID) {
+            this.name = name;
+            this.groupID = ID;
+        }
 
         GroupInfo(DocumentSnapshot snapshot) {
             name = snapshot.getString("name");
