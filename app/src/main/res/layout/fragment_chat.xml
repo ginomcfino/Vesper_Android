@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatFragment">
+    tools:context=".chat.ChatFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/txtGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="24dp"
+        android:text="Group Name Here" />
+
+    <ListView
+        android:id="@+id/listMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="This is CHAT" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/txtGroupName"
+        android:layout_above="@id/edtMessage"
+        android:stackFromBottom="true"
+        android:transcriptMode="normal"
+        android:dividerHeight="8dp"
+        android:divider="#00000000"
+        android:padding="10dp"/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edtMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/btnSend"
+        android:layout_marginLeft="10dp"
+        android:inputType="textPersonName"
+        android:layout_alignParentBottom="true"
+        android:hint="@string/message_prompt" />
+
+    <ImageButton
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_baseline_send_24" />
+
+
+</RelativeLayout>

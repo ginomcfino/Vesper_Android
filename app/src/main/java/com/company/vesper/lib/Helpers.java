@@ -3,9 +3,11 @@ package com.company.vesper.lib;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.text.format.DateFormat;
 
-import com.company.vesper.LoginActivity;
-import com.company.vesper.MainActivity;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -27,4 +29,13 @@ public class Helpers {
         }, DELAY);
     }
 
+    public static String getLongTimestamp(long time) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
+        // Create a calendar object that will convert the date and time value in
+        // milliseconds to date.
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("yyyy.MM.dd\nHH:mm aa", cal).toString();
+        return date;
+    }
 }

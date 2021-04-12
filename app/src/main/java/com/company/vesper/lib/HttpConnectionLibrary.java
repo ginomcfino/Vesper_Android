@@ -77,7 +77,7 @@ public class HttpConnectionLibrary {
      * @param requestURL Target URL of the POST request
      * @param params     HashMap of the params to be encoded in the POST body
      */
-    public static void sendPOST(String requestURL, HashMap<String, String> params) {
+    public static void sendPOST(String requestURL, HashMap<String, Object> params) {
         sendPOST(requestURL, params, null);
     }
 
@@ -89,13 +89,13 @@ public class HttpConnectionLibrary {
      * @param callback   callback function when response is returned. Best used in lambda format "(response: String) -> {}"
      */
     public static void sendPOST(String requestURL,
-                                HashMap<String, String> params, postListener callback) {
+                                HashMap<String, Object> params, postListener callback) {
 
         JSONObject jsonBody = new JSONObject();
 
-        for (Map.Entry<String, String> entry : params.entrySet()) {
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
             String key = entry.getKey();
-            String value = entry.getValue();
+            Object value = entry.getValue();
             try {
                 jsonBody.put(key, value);
             } catch (JSONException e) {

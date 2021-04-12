@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="signal_leader_message">#AA60D8FB</color>
+    <color name="own_message">#00EEEEEE</color>
+    <color name="other_message">#AABBBBBB</color>
 </resources>
