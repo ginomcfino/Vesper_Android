@@ -2,17 +2,28 @@ package com.company.vesper;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
+import com.anychart.data.Table;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.company.vesper.databinding.FragmentHomeBinding;
+import com.company.vesper.services.AlphaVantage;
 import com.company.vesper.watchlist.WatchListAdapter;
 import com.company.vesper.watchlist.WatchListItem;
 import com.google.android.gms.tasks.Task;
@@ -78,6 +89,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -120,4 +132,5 @@ public class HomeFragment extends Fragment {
         // Set an handler to catch which option the user chooses
         return view;
     }
+
 }

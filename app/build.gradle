@@ -57,6 +57,9 @@ dependencies {
 
     // Volley Library for HTTP connections
     implementation 'com.android.volley:volley:1.2.0'
+
+    //AnyChart
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services';
