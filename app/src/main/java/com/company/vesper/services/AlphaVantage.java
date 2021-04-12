@@ -49,7 +49,6 @@ public class AlphaVantage {
             }
         });
     }
-
     public interface AlphaVantageResponseCallback {
         void callback(JSONObject response);
     }
