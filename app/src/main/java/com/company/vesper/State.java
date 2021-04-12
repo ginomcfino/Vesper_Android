@@ -135,5 +135,9 @@ public class State {
         public String getSignaler() {
             return signaler;
         }
+
+        public String getName() {
+            return name;
+        }
     }
 }

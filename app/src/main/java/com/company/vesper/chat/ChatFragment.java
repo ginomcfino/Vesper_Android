@@ -5,10 +5,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
+import com.company.vesper.MainActivity;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentChatBinding;
 import com.company.vesper.lib.HttpConnectionLibrary;
@@ -27,6 +30,8 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private List<ChatMessage> messages;
     private ChatMessageAdapter adapter;
+
+    private boolean isLoadingMessage;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -62,7 +67,20 @@ public class ChatFragment extends Fragment {
         adapter = new ChatMessageAdapter(getContext(), messages);
         binding.listMessages.setAdapter(adapter);
         binding.btnSend.setOnClickListener(v -> sendMessage(v));
+        binding.txtGroupName.setText(State.getGroup().getName());
 
+        binding.listMessages.setOnTouchListener((v, event) -> {
+            switch(event.getAction()){
+                case MotionEvent.ACTION_MOVE:
+                    // see if it top is at Zero, and first visible position is at 0
+                    if(binding.listMessages.getFirstVisiblePosition() == 0){
+                        // TODO load messages here. Also set message load boolean to true.
+                        Toast.makeText(getContext(), "Header Item Visible",
+                                Toast.LENGTH_SHORT).show();
+                    }
+            }
+            return false;
+        });
         return binding.getRoot();
     }
 
@@ -85,9 +103,11 @@ public class ChatFragment extends Fragment {
         Long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()/ 1000L);
         params.put("time", time.toString());
 
-//        HttpConnectionLibrary.sendPOST("http://128.31.25.3/send-message", params);
+        HttpConnectionLibrary.sendPOST("http://128.31.25.3/send-message", params);
 
         messages.add(new ChatMessage(State.getUser().getName(), State.getUser().getUid(), isSignaler, message, time));
         adapter.notifyDataSetChanged();
+
+        binding.edtMessage.setText("");
     }
 }
