@@ -27,11 +27,14 @@ public class AlphaVantage {
     private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_DAILY&symbol=";
     private static String url2 = "&outputsize=compact";
 
+    private static String urlCurrent = "http://128.31.25.3/alpha-vantage/?function=GLOBAL_QUOTE&symbol=";
+
     static class StockData {
         String Ticker;
         String Name;
         Double closingPrice;
         Double dailyChange;
+        Double currentPrice;
     }
 
     /*
@@ -92,6 +95,30 @@ public class AlphaVantage {
         void callback(List<DataEntry> response);
     }
 
+    public static void getCurrentStockData(String symbol, CurrentDataResponseCallback callback){
+
+        String fUrl = urlCurrent + symbol;
+        StockData data = new StockData();
+
+        sendAndRequestResponse(fUrl, response -> {
+                    try {
+                        JSONObject fResponse = response.getJSONObject("Global Quote");
+                        data.Ticker = symbol;
+                        data.currentPrice = fResponse.getDouble("05. price");
+
+                        callback.callback(data);
+
+                    } catch (JSONException e) {
+                        Log.d("TESTING","Error JSON Exception");
+                    }
+                });
+    }
+
+
+    public interface CurrentDataResponseCallback {
+        void callback(StockData response);
+    }
+
     /*
         Creates a historical stock data in the given view.
             - symbol: Symbol of the stock to display in the graph
@@ -122,33 +149,4 @@ public class AlphaVantage {
         });
     }
 
-    public static StockData getStockData(String symbol, StockDataResponseCallback callback){
-        String fUrl = url + symbol + url2;
-
-        StockData data = new StockData();
-
-        sendAndRequestResponse(fUrl, response -> {
-            try {
-                JSONObject fResponse = response.getJSONObject("Time Series (Daily)");
-                JSONArray dates = fResponse.names();
-
-                String keys = dates.getString(dates.length() - 1);
-                JSONObject tResponse = fResponse.getJSONObject(keys);
-
-                data.Ticker = symbol;
-                data.Name = "TEST";
-                data.closingPrice = tResponse.getDouble("4. close");
-                data.dailyChange = (tResponse.getDouble("4. close") - tResponse.getDouble("1. open"));
-
-            } catch (JSONException e) {
-                Log.d("TEST", "JSON Exception");
-            }
-        });
-
-        return data;
-    }
-
-    public interface StockDataResponseCallback {
-        void callback(StockData response);
-    }
 }
