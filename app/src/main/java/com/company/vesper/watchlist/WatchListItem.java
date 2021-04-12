@@ -20,5 +20,4 @@ public class WatchListItem {
         this.closingPrice = closingPrice;
         this.dailyChange = dailyChange;
     }
-
 }

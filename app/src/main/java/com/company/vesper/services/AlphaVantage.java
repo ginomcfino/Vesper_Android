@@ -20,7 +20,6 @@ public class AlphaVantage {
         //jsonRequest is the GET request, processed by requestQueue
         HttpConnectionLibrary.sendGET(url, null, response -> callback.callback(response));
     }
-
     public interface AlphaVantageResponseCallback {
         void callback(JSONObject response);
     }
