@@ -12,6 +12,9 @@ import com.company.vesper.chat.ChatFragment;
 import com.company.vesper.databinding.ActivityMainBinding;
 import com.company.vesper.services.AlphaVantage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+
     }
 
     /**
