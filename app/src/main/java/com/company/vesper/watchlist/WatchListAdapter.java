@@ -32,9 +32,13 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         }
         // Bind the views
         TextView watchListRow = (TextView) convertView.findViewById(R.id.stockInfo);
+        TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
+        TextView txtChange = (TextView) convertView.findViewById(R.id.txtChange);
         // Populate the data into the template view using the data object
         // TODO: We may have to construct a data object when we have more fields to pass to the listView
         watchListRow.setText(item.Ticker);
+        txtPrice.setText("" + item.closingPrice);
+        txtChange.setText("" + item.dailyChange);
         //watchListRow.setText(item.Name);
 
         return convertView;

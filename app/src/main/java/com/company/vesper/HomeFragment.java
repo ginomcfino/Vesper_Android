@@ -120,12 +120,14 @@ public class HomeFragment extends Fragment {
 
             // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
             for (int i = 0; i < tickerSymbols.size(); i++) {
-                WatchListItem wItem = new WatchListItem(tickerSymbols.get(i));
                 // add it to watchlist_array
-                watchlist_array.add(wItem);
+                AlphaVantage.getStockData(tickerSymbols.get(i), stockData -> {
+                    WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.closingPrice, stockData.dailyChange);
+                            watchlist_array.add(watchListItem);
+                            adapter.notifyDataSetChanged();
+                });
                 // Now we must add it to adapter
             }
-            adapter.notifyDataSetChanged();
             // This tells adapter that we have added items to the list, and so listview needs to create the new ui elements for these items
         });
 

@@ -16,4 +16,22 @@
         app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/stockInfo"
+        app:layout_constraintTop_toTopOf="@+id/stockInfo" />
+
+    <TextView
+        android:id="@+id/txtChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/txtPrice"
+        app:layout_constraintTop_toTopOf="@+id/txtPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>
