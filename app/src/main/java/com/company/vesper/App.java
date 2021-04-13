@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.company.vesper.lib.HttpConnectionLibrary;
+import com.company.vesper.lib.Preferences;
 import com.company.vesper.services.FCMServiceHandler;
 
 /**
@@ -22,6 +23,7 @@ public class App extends Application {
 
         FCMServiceHandler.loadFCMToken();
         State.init();
+        Preferences.init(getContext());
     }
 
     public static Context getContext() {

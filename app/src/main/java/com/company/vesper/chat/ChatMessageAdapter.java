@@ -12,10 +12,16 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.company.vesper.App;
+import com.company.vesper.MainActivity;
 import com.company.vesper.R;
+import com.company.vesper.SignalDetailFragment;
 import com.company.vesper.State;
 import com.company.vesper.databinding.ChatMessageLayoutLeaderBinding;
 import com.company.vesper.databinding.ChatMessageLayoutRegularBinding;
+import com.company.vesper.databinding.SignalMessageBinding;
+import com.company.vesper.lib.Helpers;
+import com.company.vesper.signal.Signal;
 
 import java.util.List;
 
@@ -33,9 +39,13 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 //        if (convertView == null) { // Cannot reuse view because we are stacking from the bottom, adding items to both the top and bottom.
-            ChatMessage message = getItem(position);
+        ChatMessage message = getItem(position);
 
-            LayoutInflater inflater = LayoutInflater.from(getContext());
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        if (message.type.equals("signal")) {
+            Signal signal = message.signal;
+            convertView = Helpers.createSignalMessage(inflater, signal, true);
+        } else {
             TextView txtMessage = null;
             TextView txtSender = null;
             TextView txtTimestamp = null;
@@ -70,6 +80,7 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
             txtTimestamp.setText(message.timestamp);
 
             layout.setClipToOutline(true);
+        }
 //        }
 
         return convertView;

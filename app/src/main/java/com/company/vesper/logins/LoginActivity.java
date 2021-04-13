@@ -13,6 +13,7 @@ import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.ActivityLoginBinding;
 import com.company.vesper.lib.Helpers;
+import com.company.vesper.lib.Preferences;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;

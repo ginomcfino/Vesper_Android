@@ -1,11 +1,7 @@
 package com.company.vesper.chat;
 
 import android.annotation.SuppressLint;
-import android.icu.number.NumberFormatter;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
+import com.company.vesper.MainActivity;
 import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentChatBinding;
@@ -33,7 +32,6 @@ public class ChatFragment extends Fragment {
     private List<ChatMessage> messages;
     private ChatMessageAdapter adapter;
 
-    private boolean isLoadingMessage;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -59,23 +57,6 @@ public class ChatFragment extends Fragment {
         }
     }
 
-    public void switchGroups(View v) {
-        PopupMenu popup = new PopupMenu(getContext(), v);
-
-        List<State.GroupInfo> groups = State.getUser().getGroups();
-        popup.setOnMenuItemClickListener(menuItem -> {
-            int index = menuItem.getItemId();
-            Toast.makeText(getContext(), "" + menuItem.getItemId(), Toast.LENGTH_SHORT).show();
-            return true;
-        });
-
-        for (int i = 0; i < groups.size(); i++) {
-            popup.getMenu().add(0, i, i, groups.get(i).getName());
-        }
-
-        popup.getMenuInflater().inflate(R.menu.blank_menu, popup.getMenu());
-        popup.show();
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -88,8 +69,8 @@ public class ChatFragment extends Fragment {
         adapter = new ChatMessageAdapter(getContext(), messages);
         binding.listMessages.setAdapter(adapter);
 
-        binding.btnSend.setOnClickListener(v -> sendMessage(v));
-        binding.txtGroupName.setOnClickListener(v -> switchGroups(v));
+        binding.btnSend.setOnClickListener(v -> sendMessage());
+        binding.txtGroupName.setOnClickListener(v -> showSwitchGroupsMenu(v));
 
         binding.txtGroupName.setText(State.getGroup().getName());
 
@@ -108,7 +89,51 @@ public class ChatFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public void sendMessage(View v) {
+    /**
+     * Event handle for display switch group menu. When clicked will reload fragment to the new group
+     *
+     * @param v The view that is clicked to display this menu.
+     */
+    private void showSwitchGroupsMenu(View v) {
+        PopupMenu popup = new PopupMenu(getContext(), v);
+
+        List<State.GroupInfo> groups = new ArrayList<>();
+        groups.addAll(State.getUser().getGroups());
+        if (groups.size() == 0) {
+            // if the user is only in one single group, do not do anything
+            return;
+        }
+
+        for (int i = 0; i < groups.size(); ++i) {
+            // remove current group from the list
+            if (groups.get(i).getID().equals(State.getGroup().getID())) {
+                groups.remove(i);
+                break;
+            }
+        }
+
+        popup.setOnMenuItemClickListener(menuItem -> {
+            int index = menuItem.getItemId();
+            State.getDatabase().collection("groups").document(groups.get(index).getID()).get().addOnCompleteListener(task -> {
+                // swap groups
+                State.setGroup(task.getResult());
+                ((MainActivity) getActivity()).setCurrentFragment(new ChatFragment());
+            });
+            return true;
+        });
+
+        for (int i = 0; i < groups.size(); i++) {
+            popup.getMenu().add(0, i, i, groups.get(i).getName());
+        }
+
+        popup.getMenuInflater().inflate(R.menu.blank_menu, popup.getMenu());
+        popup.show();
+    }
+
+    /**
+     * Event handler for sending message. Bound to btnSendMessage;
+     */
+    private void sendMessage() {
         if (binding.edtMessage.getText().length() == 0) {
             return;
         }
@@ -124,7 +149,7 @@ public class ChatFragment extends Fragment {
         params.put("message", message);
         params.put("sourceDevice", State.getDeviceFCMToken());
 
-        Long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis()/ 1000L);
+        Long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis() / 1000L);
         params.put("time", time.toString());
 
         HttpConnectionLibrary.sendPOST("http://128.31.25.3/send-message", params);

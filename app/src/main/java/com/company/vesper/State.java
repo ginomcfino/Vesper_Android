@@ -20,6 +20,7 @@ public class State {
     private static FirebaseAuth auth;
     private static FirebaseFirestore database;
     private static UserInfo user;
+
     private static GroupInfo group;
     private static String deviceFCMToken;
     private static Map<String, String> usernameMap;
@@ -70,6 +71,10 @@ public class State {
         return group;
     }
 
+    public static void setGroup(DocumentSnapshot snapshot) {
+        group = new GroupInfo(snapshot);
+    }
+
     public static String getDeviceFCMToken() {
         return deviceFCMToken;
     }
@@ -102,8 +107,8 @@ public class State {
                     DocumentReference docs = groupRefs.get(i);
                     int finalI = i;
                     docs.get().addOnCompleteListener(task -> {
-                        DocumentSnapshot ss = t.getResult();
-                        groups.add(new GroupInfo(ss.getString("name"), ss.getId()));
+                        DocumentSnapshot ss = task.getResult();
+                        groups.add(new GroupInfo(ss));
                         if (finalI == 0) {
                             // TODO fix this, we currently just load in the first group of a user. What to do if there is no groups?
                             State.getDatabase().collection("groups").document(groups.get(0).groupID).get().addOnCompleteListener(groupTask -> {
@@ -132,10 +137,12 @@ public class State {
     }
 
     public static class GroupInfo {
+
         String name;
         String groupID;
         String signaler;
         List<String> members;
+        DocumentReference ref;
 
         GroupInfo(String name, String ID) {
             this.name = name;
@@ -148,6 +155,7 @@ public class State {
             groupID = snapshot.getId();
 
             members = (List<String>) snapshot.get("members");
+            ref = snapshot.getReference();
         }
 
         public String getID() {
@@ -160,6 +168,10 @@ public class State {
 
         public String getName() {
             return name;
+        }
+
+        public DocumentReference getRef() {
+            return ref;
         }
     }
 }

@@ -23,16 +23,16 @@ import java.util.List;
 
 public class AlphaVantage {
 
+    public static class StockData {
+        public String Ticker;
+        public String Name;
+        public Double closingPrice;
+        public Double dailyChange;
+    }
+
 
     private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_DAILY&symbol=";
     private static String url2 = "&outputsize=compact";
-
-    static class StockData {
-        String Ticker;
-        String Name;
-        Double closingPrice;
-        Double dailyChange;
-    }
 
     /*
     Uses Volley to make GET request with http REST interface
@@ -140,6 +140,7 @@ public class AlphaVantage {
                 data.closingPrice = tResponse.getDouble("4. close");
                 data.dailyChange = (tResponse.getDouble("4. close") - tResponse.getDouble("1. open"));
 
+                callback.callback(data);
             } catch (JSONException e) {
                 Log.d("TEST", "JSON Exception");
             }

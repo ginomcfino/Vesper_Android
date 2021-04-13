@@ -1,6 +1,7 @@
 package com.company.vesper.chat;
 
 import com.company.vesper.State;
+import com.company.vesper.signal.Signal;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -8,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatLoader {
+    private static boolean isLoadingMessage;
+    private static boolean isOldestMessage;
+    private static long lastLoadTime;
+    private static int unloaded_count = 0;
+
+
     private static String TAG = ChatLoader.class.getName();
 
     public static void loadMessages(String chatId, LoadChatCallback callback) {
@@ -26,14 +33,45 @@ public class ChatLoader {
             QuerySnapshot snapshot = task.getResult();
 
             for (DocumentSnapshot docSnap : snapshot.getDocuments()) {
-                String senderID = docSnap.getString("sender");
-                String sender = State.getName(senderID);
-                String message = docSnap.getString("message");
-                long timestamp = docSnap.getLong("time");
-                messages.add(new ChatMessage(sender, senderID, senderID.equals(State.getGroup().getSignaler()), message, timestamp));
+                if (docSnap.getString("type").equals("message")) {
+                    String senderID = docSnap.getString("sender");
+                    String sender = State.getName(senderID);
+                    String message = docSnap.getString("message");
+                    long timestamp = docSnap.getLong("time");
+                    messages.add(new ChatMessage(sender, senderID, senderID.equals(State.getGroup().getSignaler()), message, timestamp));
+                } else {
+                    ChatMessage chm = new ChatMessage();
+                    messages.add(chm);
+
+                    // We need to fetch another piece of document, so increment
+                    unloaded_count += 1;
+
+                    docSnap.getDocumentReference("signal").get().addOnCompleteListener(signalTask -> {
+                        DocumentSnapshot signal = signalTask.getResult();
+                        Signal summary = new Signal(
+                                signal.getString("ticker"),
+                                signal.getDouble("buy"),
+                                signal.getDouble("sell"),
+                                signal.getDouble("loss"),
+                                signal.getBoolean("active"),
+                                signal.getDocumentReference("group"));
+                        chm.setSignalMessage(summary);
+                        // decrement unloaded pieces of document
+                        unloaded_count -= 1;
+
+                        // if everything has finished loading then we can return
+                        if (unloaded_count == 0) {
+                            callback.callback(messages);
+                        }
+                    });
+                }
+
             }
 
-            callback.callback(messages);
+            // only return if everything was loaded, otherwise we let the load-callbacks to return the messages
+            if (unloaded_count == 0) {
+                callback.callback(messages);
+            }
         });
     }
 
