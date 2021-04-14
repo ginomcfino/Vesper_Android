@@ -82,7 +82,10 @@ public class ChatFragment extends Fragment {
                         // TODO load messages here. Also set message load boolean to true.
                         Toast.makeText(ChatFragment.this.getContext(), "Header Item Visible",
                                 Toast.LENGTH_SHORT).show();
+                        binding.listMessages.setOnTouchListener(null);
                     }
+
+                    // TODO need to rebind this back after we have finished loading code.
             }
             return false;
         });

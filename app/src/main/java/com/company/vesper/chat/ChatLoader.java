@@ -75,7 +75,16 @@ public class ChatLoader {
         });
     }
 
+    public static void loadMoreData() {
+        isLoadingMessage = true;
+        // TODO load data;
+    }
+    public static boolean isLoading() {
+        return isLoadingMessage;
+    }
+
     public interface LoadChatCallback {
         void callback(List<ChatMessage> messages) ;
     }
+
 }

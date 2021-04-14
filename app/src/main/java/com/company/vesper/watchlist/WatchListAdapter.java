@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import com.company.vesper.DetailedStockFragment;
+import com.company.vesper.MainActivity;
 import com.company.vesper.R;
+import com.company.vesper.lib.Helpers;
 
 import java.util.List;
 
@@ -38,8 +42,19 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         // TODO: We may have to construct a data object when we have more fields to pass to the listView
         watchListRow.setText(item.Ticker);
         txtPrice.setText("" + item.closingPrice);
-        txtChange.setText("" + item.dailyChange);
+        txtChange.setText(Helpers.formatDecimal(item.dailyChange));
+
+        if (item.dailyChange > 0) {
+            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
+        } else {
+            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
+        }
         //watchListRow.setText(item.Name);
+
+        convertView.setOnClickListener(v -> {
+            DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker);
+            MainActivity.instance.setCurrentFragment(fragment);
+        });
 
         return convertView;
     }

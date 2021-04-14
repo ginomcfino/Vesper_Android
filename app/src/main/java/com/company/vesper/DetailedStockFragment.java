@@ -14,7 +14,6 @@ import com.company.vesper.services.AlphaVantage;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DetailedStockFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
@@ -29,29 +28,14 @@ public class DetailedStockFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    private String ticker;
+
     private FragmentDetailedStockBinding binding;
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailedStockFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailedStockFragment newInstance(String param1, String param2) {
-        DetailedStockFragment fragment = new DetailedStockFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public DetailedStockFragment() {
-        // Required empty public constructor
+    public DetailedStockFragment(String ticker) {
+        this.ticker = ticker;
     }
 
     @Override
@@ -70,7 +54,7 @@ public class DetailedStockFragment extends Fragment {
         // Inflate the layout for this fragment
         AnyChartView view = binding.anyChartView;
 
-        AlphaVantage.makeStockChart("TSLA",10,view);
+        AlphaVantage.makeStockChart(ticker,10,view);
 
         return binding.getRoot();
     }

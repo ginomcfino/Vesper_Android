@@ -35,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,33 +104,27 @@ public class HomeFragment extends Fragment {
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
         // Initialize custom watchlist adapter
-        WatchListAdapter adapter = new WatchListAdapter(getContext(), watchlist_array);
+        WatchListAdapter adapter = new WatchListAdapter(Objects.requireNonNull(getContext()), watchlist_array);
 
         // Attach the adapter to a ListView
         // TODO: What xml does this go in?
         // TODO: Is converting frame layout to constraintlayout acceptable?
         ListView listView = binding.listViewObject;
-//        ListView listView = (ListView) view.findViewById(R.id.listViewObject); // View binding feature not needed
         listView.setAdapter(adapter);
 
-        // Calls and gets a list of the ticket symbols
-        State.getDatabase().collection("users").document(State.getUser().getUid()).get().addOnCompleteListener(t -> {
-            DocumentSnapshot snapshot = t.getResult();
-            // We get a list of ticker symbols
-            List<String> tickerSymbols = (List<String>) snapshot.get("watchlist");
+        List<String> tickerSymbols = State.getUser().getWatchlist();
 
-            // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
-            for (int i = 0; i < tickerSymbols.size(); i++) {
-                // add it to watchlist_array
-                AlphaVantage.getStockData(tickerSymbols.get(i), stockData -> {
-                    WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.closingPrice, stockData.dailyChange);
-                            watchlist_array.add(watchListItem);
-                            adapter.notifyDataSetChanged();
-                });
-                // Now we must add it to adapter
-            }
-            // This tells adapter that we have added items to the list, and so listview needs to create the new ui elements for these items
-        });
+        // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
+        for (int i = 0; i < tickerSymbols.size(); i++) {
+            // add it to watchlist_array
+            AlphaVantage.getStockData(tickerSymbols.get(i), stockData -> {
+                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.closingPrice, stockData.dailyChange);
+                        watchlist_array.add(watchListItem);
+                        adapter.notifyDataSetChanged();
+            });
+            // Now we must add it to adapter
+        }
+        // This tells adapter that we have added items to the list, and so listview needs to create the new ui elements for these items
 
         // Set an handler to catch which option the user chooses
         return view;

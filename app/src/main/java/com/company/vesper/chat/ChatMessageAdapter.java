@@ -12,14 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import com.company.vesper.App;
-import com.company.vesper.MainActivity;
 import com.company.vesper.R;
-import com.company.vesper.SignalDetailFragment;
 import com.company.vesper.State;
 import com.company.vesper.databinding.ChatMessageLayoutLeaderBinding;
 import com.company.vesper.databinding.ChatMessageLayoutRegularBinding;
-import com.company.vesper.databinding.SignalMessageBinding;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.signal.Signal;
 

@@ -1,18 +1,17 @@
-package com.company.vesper;
+package com.company.vesper.signal;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.company.vesper.R;
+import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentSignalBinding;
-import com.company.vesper.databinding.SignalMessageBinding;
 import com.company.vesper.lib.Helpers;
-import com.company.vesper.signal.Signal;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;

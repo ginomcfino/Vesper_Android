@@ -88,6 +88,7 @@ public class State {
         String display_name;
         String email;
         List<GroupInfo> groups;
+        List<String> watchlist;
 
         UserInfo(FirebaseUser user) {
             this.user = user;
@@ -101,6 +102,7 @@ public class State {
                 DocumentSnapshot snapshot = t.getResult();
                 display_name = snapshot.getString("displayName");
                 email = snapshot.getString("email");
+                watchlist = (List<String>) snapshot.get("watchlist");
                 List<DocumentReference> groupRefs = (List<DocumentReference>) snapshot.get("groups");
                 groups = new ArrayList<>();
                 for (int i = 0; i < groupRefs.size(); i++) {
@@ -133,6 +135,10 @@ public class State {
 
         public List<GroupInfo> getGroups() {
             return groups;
+        }
+
+        public List<String> getWatchlist() {
+            return watchlist;
         }
     }
 

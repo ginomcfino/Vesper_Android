@@ -1,14 +1,18 @@
-package com.company.vesper;
+package com.company.vesper.signal;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.company.vesper.R;
+import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentSignalDetailBinding;
 import com.company.vesper.databinding.SignalMessageBinding;
 import com.company.vesper.lib.Helpers;
@@ -50,7 +54,12 @@ public class SignalDetailFragment extends Fragment {
 
         AlphaVantage.getStockData(signal.getTicker(), response -> {
             binding.txtPrice.setText("" + response.closingPrice);
-            binding.txtChange.setText("" + response.dailyChange);
+            binding.txtChange.setText(Helpers.formatDecimal(response.dailyChange) + "%");
+            if (response.dailyChange > 0) {
+                binding.txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
+            } else {
+                binding.txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
+            }
         });
 
 

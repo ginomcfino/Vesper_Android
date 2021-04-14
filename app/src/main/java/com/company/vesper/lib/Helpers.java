@@ -9,19 +9,19 @@ import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
-import com.company.vesper.App;
 import com.company.vesper.MainActivity;
 import com.company.vesper.R;
-import com.company.vesper.SignalDetailFragment;
+import com.company.vesper.signal.SignalDetailFragment;
 import com.company.vesper.databinding.SignalMessageBinding;
 import com.company.vesper.signal.Signal;
 
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import static androidx.core.content.ContextCompat.startActivity;
 import static com.company.vesper.App.getContext;
+import static com.company.vesper.databinding.SignalMessageBinding.inflate;
 
 public class Helpers {
     private static String TAG = Helpers.class.getName();
@@ -37,18 +37,28 @@ public class Helpers {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent = new Intent(context, activityClass);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(context, intent, null);
         }, DELAY);
     }
 
+    /**
+     * Convert the time into timestamp with yyyy.MM.dd\nHH:mm aa
+     * @param time
+     * @return
+     */
     public static String getLongTimestamp(long time) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
         // Create a calendar object that will convert the date and time value in
         // milliseconds to date.
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time * 1000);
         String date = DateFormat.format("yyyy.MM.dd\nHH:mm aa", cal).toString();
         return date;
+    }
+
+    public static String formatDecimal(double value) {
+        DecimalFormat df = new DecimalFormat("#,###,##0.00");
+        return df.format(value);
     }
 
 
@@ -60,7 +70,7 @@ public class Helpers {
      * @return the generated view
      */
     public static View createSignalMessage(LayoutInflater inflater, Signal signal, boolean withListener) {
-        SignalMessageBinding binding = SignalMessageBinding.inflate(inflater);
+        SignalMessageBinding binding = inflate(inflater);
         binding.txtTicker.setText(signal.getTicker());
         binding.txtBuy.setText(String.format("%s", signal.getBuy()));
         binding.txtSell.setText("" + signal.getSell());

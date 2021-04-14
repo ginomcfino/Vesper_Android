@@ -5,15 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.company.vesper.chat.ChatFragment;
 import com.company.vesper.databinding.ActivityMainBinding;
-import com.company.vesper.services.AlphaVantage;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.company.vesper.signal.SignalFragment;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
@@ -56,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public void setCurrentFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.fl_wrapper, fragment, null);
+        transaction.replace(R.id.fl_wrapper, fragment, null).addToBackStack(TAG);
 
         transaction.commit();
     }
