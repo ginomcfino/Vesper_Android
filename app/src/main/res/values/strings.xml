@@ -21,4 +21,15 @@
     <string name="sign_up">Sign Up</string>
     <string name="ask_to_login">Already have an account? Login.</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="prompt_display_name">Display Name</string>
+    <string name="email_empty_error">Email cannot be empty</string>
+    <string name="password_short_error">Password is too short</string>
+    <string name="password_unmatch_error">Passwords do not match</string>
+    <string name="email_invalid_error">Email is not in a valid format</string>
+    <string name="message_prompt">Enter your message here</string>
+    <string name="buy_signal">Buy@</string>
+    <string name="sell_message">Sell@</string>
+    <string name="stop_loss_message">Stop Loss@</string>
+    <string name="live_signal">LIVE</string>
+    <string name="expired_signal">EXPIRED</string>
 </resources>

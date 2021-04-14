@@ -1,10 +1,13 @@
 package com.company.vesper.services;
 
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.company.vesper.State;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -43,4 +46,19 @@ public class FCMServiceHandler extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
 
     }
+
+    /**
+     * Load the FCM token
+     */
+    public static void loadFCMToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    State.setDeviceFCMToken(task.getResult());
+                });
+    }
+
 }

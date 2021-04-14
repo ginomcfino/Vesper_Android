@@ -1,22 +1,25 @@
-package com.company.vesper;
+package com.company.vesper.logins;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.company.vesper.MainActivity;
+import com.company.vesper.R;
+import com.company.vesper.State;
 import com.company.vesper.databinding.ActivityLoginBinding;
 import com.company.vesper.lib.Helpers;
+import com.company.vesper.lib.Preferences;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
@@ -31,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // TODO! remove this in the future, only here for debugging.
-        login("ericchen1248@gmail.com", "password");
+        login("ericjyc@bu.edu", "password");
     }
 
     public void login(View v) {
@@ -74,6 +77,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 }
