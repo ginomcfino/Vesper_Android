@@ -17,39 +17,39 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.777" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/companyTitle"-->
-<!--        android:layout_width="86dp"-->
-<!--        android:layout_height="33dp"-->
-<!--        android:text="TextView"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.132"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.212" />-->
+    <TextView
+        android:id="@+id/header1"
+        android:layout_width="83dp"
+        android:layout_height="44dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.202" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/priceTitle"-->
-<!--        android:layout_width="86dp"-->
-<!--        android:layout_height="33dp"-->
-<!--        android:text="TextView"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.892"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.212" />-->
+    <TextView
+        android:id="@+id/header2"
+        android:layout_width="83dp"
+        android:layout_height="45dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/dailyChangeString"-->
-<!--        android:layout_width="86dp"-->
-<!--        android:layout_height="33dp"-->
-<!--        android:text="TextView"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/listViewObject"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/priceTitle"-->
-<!--        app:layout_constraintHorizontal_bias="0.55"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/companyTitle"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
+    <TextView
+        android:id="@+id/header3"
+        android:layout_width="78dp"
+        android:layout_height="42dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.201" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
