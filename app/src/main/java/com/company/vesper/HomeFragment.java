@@ -21,6 +21,7 @@ import com.anychart.data.Table;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.company.vesper.databinding.FragmentHomeBinding;
 import com.company.vesper.services.AlphaVantage;
@@ -98,8 +99,16 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        FirebaseFirestore snapshot_db ;
-        CollectionReference snapshot_collection;
+
+//        // Find titles views within FragmentView
+//        TextView companyTitle = (TextView) view.findViewById(R.id.companyTitle);
+//        TextView txtPrice = (TextView) view.findViewById(R.id.txtPrice);
+//        TextView txtChange = (TextView) view.findViewById(R.id.txtChange);
+//
+//        // Set titles
+//        companyTitle.setText("Company");
+//        txtPrice.setText("Price");
+//        txtChange.setText("Daily Change");
 
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
@@ -107,10 +116,17 @@ public class HomeFragment extends Fragment {
         WatchListAdapter adapter = new WatchListAdapter(Objects.requireNonNull(getContext()), watchlist_array);
 
         // Attach the adapter to a ListView
-        // TODO: What xml does this go in?
-        // TODO: Is converting frame layout to constraintlayout acceptable?
         ListView listView = binding.listViewObject;
         listView.setAdapter(adapter);
+
+
+//        // TODO:We need to create a header
+
+        // THIS IS A PLACEHOLDER -  NOT A FINAL SOLUTION
+        TextView textView = new TextView(this.getActivity());
+        textView.setText("Company" + "Price" + "Daily Change");
+        textView.setTextSize(24);
+        listView.addHeaderView(textView);
 
         List<String> tickerSymbols = State.getUser().getWatchlist();
 

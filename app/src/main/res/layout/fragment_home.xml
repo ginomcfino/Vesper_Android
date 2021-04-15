@@ -9,10 +9,47 @@
 
     <ListView
         android:id="@+id/listViewObject"
-        android:layout_width="238dp"
-        android:layout_height="320dp"
+        android:layout_width="340dp"
+        android:layout_height="498dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.777" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/companyTitle"-->
+<!--        android:layout_width="86dp"-->
+<!--        android:layout_height="33dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.132"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.212" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/priceTitle"-->
+<!--        android:layout_width="86dp"-->
+<!--        android:layout_height="33dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.892"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.212" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/dailyChangeString"-->
+<!--        android:layout_width="86dp"-->
+<!--        android:layout_height="33dp"-->
+<!--        android:text="TextView"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/listViewObject"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/priceTitle"-->
+<!--        app:layout_constraintHorizontal_bias="0.55"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/companyTitle"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

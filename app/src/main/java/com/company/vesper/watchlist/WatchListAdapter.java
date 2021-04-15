@@ -35,21 +35,21 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.watch_list_item, parent, false);
         }
         // Bind the views
-        TextView watchListRow = (TextView) convertView.findViewById(R.id.stockInfo);
+        TextView watchListRow = (TextView) convertView.findViewById(R.id.tickerView);
         TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
         TextView txtChange = (TextView) convertView.findViewById(R.id.txtChange);
         // Populate the data into the template view using the data object
-        // TODO: We may have to construct a data object when we have more fields to pass to the listView
-        watchListRow.setText(item.Ticker);
-        txtPrice.setText("" + item.closingPrice);
-        txtChange.setText(Helpers.formatDecimal(item.dailyChange));
+        watchListRow.setText(item.Ticker.toString());
+        String closingPriceString = "$" + String.valueOf(item.closingPrice);
+        txtPrice.setText(closingPriceString);
+        String dailyChangeString =  "$" + String.valueOf(Helpers.formatDecimal(item.dailyChange));
+        txtChange.setText(dailyChangeString);
 
         if (item.dailyChange > 0) {
             txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
         } else {
             txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
         }
-        //watchListRow.setText(item.Name);
 
         convertView.setOnClickListener(v -> {
             DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker);
