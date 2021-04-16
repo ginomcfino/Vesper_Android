@@ -102,34 +102,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //Instantiate search bar and get string
-        SearchView simpleSearchView = (SearchView) view.findViewById(R.id.searchBar);
-        // perform set on query text listener
-        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Maybe show options from the list of possible tickers
-                // Needs to have access to some AlphaVantage API that returns a list of 
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String Ticker) {
-
-                try {
-                    // Try to add the ticker to the watchlist
-                    State.getUser().addToWatchlist(Ticker);
-                }
-                catch(Exception e) {
-                    System.out.println("Not able to add to watchlist, wait and try again");
-                } finally{
-                    // May be needed later
-                }
-                return false;
-            }
-        });
-
-          // Find titles views within FragmentView
+        // Find titles views within FragmentView
         TextView companyTitle = (TextView) view.findViewById(R.id.header1);
         TextView txtPrice = (TextView) view.findViewById(R.id.header2);
         TextView txtChange = (TextView) view.findViewById(R.id.header3);
@@ -148,14 +121,32 @@ public class HomeFragment extends Fragment {
         ListView listView = binding.listViewObject;
         listView.setAdapter(adapter);
 
+        //Instantiate search bar and get string
+        SearchView simpleSearchView = (SearchView) view.findViewById(R.id.searchBar);
+        // perform set on query text listener
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String Ticker) {
+                try {
+                    // Try to add the ticker to the watchlist
+                    State.getUser().addToWatchlist(Ticker);
+                    adapter.notifyDataSetChanged();
+                }
+                catch(Exception e) {
+                    System.out.println("Not able to add to watchlist, wait and try again");
+                } finally{
+                    // May be needed later
+                }
+                return false;
+            }
 
-//        // TODO:We need to create a header
-
-        // THIS IS A PLACEHOLDER -  NOT A FINAL SOLUTION
-//        TextView textView = new TextView(this.getActivity());
-//        textView.setText("Company" + "Price" + "Daily Change");
-//        textView.setTextSize(24);
-//        listView.addHeaderView(textView);
+            @Override
+            public boolean onQueryTextChange(String Ticker) {
+                // Maybe show options from the list of possible tickers
+                // Needs to have access to some AlphaVantage API that returns a list of
+                return false;
+            }
+        });
 
         List<String> tickerSymbols = State.getUser().getWatchlist();
 
@@ -167,11 +158,7 @@ public class HomeFragment extends Fragment {
                         watchlist_array.add(watchListItem);
                         adapter.notifyDataSetChanged();
             });
-            // Now we must add it to adapter
         }
-        // This tells adapter that we have added items to the list, and so listview needs to create the new ui elements for these items
-
-        // Set an handler to catch which option the user chooses
         return view;
     }
 

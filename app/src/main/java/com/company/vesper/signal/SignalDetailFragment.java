@@ -52,8 +52,8 @@ public class SignalDetailFragment extends Fragment {
 
         binding.layout.addView(Helpers.createSignalMessage(inflater, signal, false), 0);
 
-        AlphaVantage.getStockData(signal.getTicker(), response -> {
-            binding.txtPrice.setText("" + response.closingPrice);
+        AlphaVantage.getCurrentStockData(signal.getTicker(), response -> {
+            binding.txtPrice.setText("" + response.currentPrice);
             binding.txtChange.setText(Helpers.formatDecimal(response.dailyChange) + "%");
             if (response.dailyChange > 0) {
                 binding.txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
@@ -61,8 +61,6 @@ public class SignalDetailFragment extends Fragment {
                 binding.txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
             }
         });
-
-
         return view;
     }
 
