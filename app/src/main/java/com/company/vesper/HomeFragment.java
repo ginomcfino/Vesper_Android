@@ -109,6 +109,7 @@ public class HomeFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Maybe show options from the list of possible tickers
+                // Needs to have access to some AlphaVantage API that returns a list of 
                 return false;
             }
 
