@@ -8,22 +8,22 @@
 
     <TextView
         android:id="@+id/tickerView"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
         android:text="TextView"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.507" />
+        app:layout_constraintVertical_bias="0.508" />
 
     <TextView
         android:id="@+id/txtPrice"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:text="TextView"
         android:textSize="20sp"
@@ -33,8 +33,8 @@
 
     <TextView
         android:id="@+id/txtChange"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
         android:layout_marginStart="32dp"
         android:text="TextView"
         android:textSize="20sp"

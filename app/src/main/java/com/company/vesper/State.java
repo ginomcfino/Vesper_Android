@@ -1,6 +1,7 @@
 package com.company.vesper;
 
 import android.icu.number.NumberFormatter;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -92,9 +93,12 @@ public class State {
 
         UserInfo(FirebaseUser user) {
             this.user = user;
-
             // populate
             populateData();
+        }
+
+        public void addToWatchlist(String Ticker) {
+            getWatchlist().add(Ticker);
         }
 
         private void populateData() {

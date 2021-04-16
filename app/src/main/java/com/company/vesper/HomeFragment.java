@@ -22,6 +22,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.company.vesper.databinding.FragmentHomeBinding;
 import com.company.vesper.services.AlphaVantage;
@@ -99,6 +101,32 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        //Instantiate search bar and get string
+        SearchView simpleSearchView = (SearchView) view.findViewById(R.id.searchBar);
+        // perform set on query text listener
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Maybe show options from the list of possible tickers
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String Ticker) {
+
+                try {
+                    // Try to add the ticker to the watchlist
+                    State.getUser().addToWatchlist(Ticker);
+                }
+                catch(Exception e) {
+                    System.out.println("Not able to add to watchlist, wait and try again");
+                } finally{
+                    // May be needed later
+                }
+                return false;
+            }
+        });
 
           // Find titles views within FragmentView
         TextView companyTitle = (TextView) view.findViewById(R.id.header1);
