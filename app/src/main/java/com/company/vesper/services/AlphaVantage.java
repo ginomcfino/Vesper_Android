@@ -125,7 +125,7 @@ public class AlphaVantage {
         void callback(StockData response);
     }
 
-    
+
 
     /*
         Creates a historical stock data in the given view.

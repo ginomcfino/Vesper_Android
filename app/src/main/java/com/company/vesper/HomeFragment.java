@@ -162,8 +162,8 @@ public class HomeFragment extends Fragment {
         // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
         for (int i = 0; i < tickerSymbols.size(); i++) {
             // add it to watchlist_array
-            AlphaVantage.getStockData(tickerSymbols.get(i), stockData -> {
-                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.closingPrice, stockData.dailyChange);
+            AlphaVantage.getCurrentStockData(tickerSymbols.get(i), stockData -> {
+                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.currentPrice, stockData.dailyChange);
                         watchlist_array.add(watchListItem);
                         adapter.notifyDataSetChanged();
             });
