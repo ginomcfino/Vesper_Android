@@ -67,17 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         State.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        State.setUser(State.getAuth().getCurrentUser());
-
-                        Map<String, Object> newUser = new HashMap<>();
-                        newUser.put("displayName", displayName);
-                        newUser.put("email", email);
-                        newUser.put("groups", new ArrayList<String>());
-                        newUser.put("devices", new ArrayList<String>());
-
-                        State.getDatabase().collection("users").document(State.getUser().getUid()).set(newUser);
-
-                        Helpers.switchToActivity(SignupActivity.this, 1000, MainActivity.class);
+                        LoginActivity.login(email, password, SignupActivity.this);
                     } else {
                         Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException().getLocalizedMessage(),
                                 Toast.LENGTH_SHORT).show();

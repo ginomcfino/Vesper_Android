@@ -1,6 +1,10 @@
 package com.company.vesper.chat;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,11 +14,13 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.company.vesper.MainActivity;
 import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentChatBinding;
+import com.company.vesper.dbModels.GroupInfo;
 import com.company.vesper.lib.HttpConnectionLibrary;
 
 import java.util.ArrayList;
@@ -31,12 +37,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private List<ChatMessage> messages;
     private ChatMessageAdapter adapter;
-
-
-    public ChatFragment() {
-        // Required empty public constructor
-
-    }
+    private BroadcastReceiver messageReceiver;
 
 
     @Override
@@ -44,6 +45,15 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         init();
+
+        registerMessageHandler();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Need to unregister the message receiver when the activity is destroyed.
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(messageReceiver);
     }
 
     private void init() {
@@ -53,7 +63,6 @@ public class ChatFragment extends Fragment {
                 messages.addAll(m);
                 adapter.notifyDataSetChanged();
             });
-
         }
     }
 
@@ -100,7 +109,7 @@ public class ChatFragment extends Fragment {
     private void showSwitchGroupsMenu(View v) {
         PopupMenu popup = new PopupMenu(getContext(), v);
 
-        List<State.GroupInfo> groups = new ArrayList<>();
+        List<GroupInfo> groups = new ArrayList<>();
         groups.addAll(State.getUser().getGroups());
         if (groups.size() == 0) {
             // if the user is only in one single group, do not do anything
@@ -161,5 +170,28 @@ public class ChatFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         binding.edtMessage.setText("");
+    }
+
+
+    /**
+     * Register to cloud messaging service to handle messages.
+     */
+    private void registerMessageHandler() {
+        messageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!intent.getStringExtra("chatID").equals(State.getGroup().getID())) {
+                    return; // not current chat
+                }
+
+                if (intent.getStringExtra("sender").equals(State.getUser().getUid())) {
+                    return; // current user sent the message, don't need to update
+                }
+                String senderID = intent.getStringExtra("sender");
+                adapter.add(new ChatMessage(State.getName(senderID), senderID, senderID.equals(State.getGroup().getSignaler()), intent.getStringExtra("message"), intent.getIntExtra("time", 0)));
+            }
+        };
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(messageReceiver, new IntentFilter("NewMessage"));
     }
 }

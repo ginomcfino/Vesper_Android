@@ -3,6 +3,8 @@ package com.company.vesper;
 import android.icu.number.NumberFormatter;
 import android.widget.Toast;
 
+import com.company.vesper.dbModels.GroupInfo;
+import com.company.vesper.dbModels.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -84,104 +86,4 @@ public class State {
         deviceFCMToken = token;
     }
 
-    public static class UserInfo {
-        FirebaseUser user;
-        String display_name;
-        String email;
-        List<GroupInfo> groups;
-        List<String> watchlist;
-
-        UserInfo(FirebaseUser user) {
-            this.user = user;
-            // populate
-            populateData();
-        }
-
-        public void addToWatchlist(String Ticker) {
-            getWatchlist().add(Ticker);
-        }
-
-        private void populateData() {
-            State.getDatabase().collection("users").document(user.getUid()).get().addOnCompleteListener(t -> {
-                DocumentSnapshot snapshot = t.getResult();
-                display_name = snapshot.getString("displayName");
-                email = snapshot.getString("email");
-                watchlist = (List<String>) snapshot.get("watchlist");
-                List<DocumentReference> groupRefs = (List<DocumentReference>) snapshot.get("groups");
-                groups = new ArrayList<>();
-                for (int i = 0; i < groupRefs.size(); i++) {
-                    DocumentReference docs = groupRefs.get(i);
-                    int finalI = i;
-                    docs.get().addOnCompleteListener(task -> {
-                        DocumentSnapshot ss = task.getResult();
-                        groups.add(new GroupInfo(ss));
-                        if (finalI == 0) {
-                            // TODO fix this, we currently just load in the first group of a user. What to do if there is no groups?
-                            State.getDatabase().collection("groups").document(groups.get(0).groupID).get().addOnCompleteListener(groupTask -> {
-                                DocumentSnapshot groupSnapshot = groupTask.getResult();
-                                group = new GroupInfo(groupSnapshot);
-                            });
-                        }
-                    });
-                }
-            });
-
-            // TODO check if current user is the same as the previously logged in person.
-        }
-
-        public String getUid() {
-            return user.getUid();
-        }
-
-        public String getName() {
-            return display_name;
-        }
-
-        public List<GroupInfo> getGroups() {
-            return groups;
-        }
-
-        public List<String> getWatchlist() {
-            return watchlist;
-        }
-    }
-
-    public static class GroupInfo {
-
-        String name;
-        String groupID;
-        String signaler;
-        List<String> members;
-        DocumentReference ref;
-
-        GroupInfo(String name, String ID) {
-            this.name = name;
-            this.groupID = ID;
-        }
-
-        GroupInfo(DocumentSnapshot snapshot) {
-            name = snapshot.getString("name");
-            signaler = snapshot.getString("signaler");
-            groupID = snapshot.getId();
-
-            members = (List<String>) snapshot.get("members");
-            ref = snapshot.getReference();
-        }
-
-        public String getID() {
-            return groupID;
-        }
-
-        public String getSignaler() {
-            return signaler;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public DocumentReference getRef() {
-            return ref;
-        }
-    }
 }

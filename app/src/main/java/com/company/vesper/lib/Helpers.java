@@ -13,11 +13,13 @@ import com.company.vesper.MainActivity;
 import com.company.vesper.R;
 import com.company.vesper.signal.SignalDetailFragment;
 import com.company.vesper.databinding.SignalMessageBinding;
-import com.company.vesper.signal.Signal;
+import com.company.vesper.dbModels.Signal;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static androidx.core.content.ContextCompat.startActivity;
 import static com.company.vesper.App.getContext;
@@ -25,7 +27,7 @@ import static com.company.vesper.databinding.SignalMessageBinding.inflate;
 
 public class Helpers {
     private static String TAG = Helpers.class.getName();
-
+    private static Map<Integer, Integer> Colors = new HashMap<>();
 
     /**
      * Helper function to switch to an activity with a delay.
@@ -78,10 +80,10 @@ public class Helpers {
 
         if (signal.isActive()) {
             binding.txtLive.setText(getContext().getString(R.string.live_signal));
-            binding.txtLive.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
+            binding.txtLive.setTextColor(getColor(R.color.active_signal));
         } else {
             binding.txtLive.setText(getContext().getString(R.string.expired_signal));
-            binding.txtLive.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
+            binding.txtLive.setTextColor(getColor(R.color.expired_signal));
         }
 
         if (withListener) {
@@ -92,5 +94,17 @@ public class Helpers {
         }
 
         return binding.getRoot();
+    }
+
+    public static int getColor(int id) {
+        if (!Colors.containsKey(id)) {
+            Colors.put(id, ContextCompat.getColor(getContext(), id));
+        }
+
+        return Colors.get(id);
+    }
+
+    public static void putColor(int id, int val) {
+        Colors.put(id, val);
     }
 }

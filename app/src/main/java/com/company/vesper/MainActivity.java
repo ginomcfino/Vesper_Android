@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import com.company.vesper.chat.ChatFragment;
 import com.company.vesper.databinding.ActivityMainBinding;
+import com.company.vesper.lib.Preferences;
+import com.company.vesper.services.FCMServiceHandler;
 import com.company.vesper.signal.SignalFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +24,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setCurrentFragment(new HomeFragment());
+        FCMServiceHandler.registerUser(State.getUser().getUid());
+
+        String firstPage = Preferences.getValue("FirstPage", "Home");
+        if (firstPage.equals("Home")) {
+            setCurrentFragment(new HomeFragment());
+        } else if (firstPage.equals("Chat")){
+            setCurrentFragment(new ChatFragment());
+        } else if (firstPage.equals("Signal")){
+            setCurrentFragment(new SignalFragment());
+        }
 
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

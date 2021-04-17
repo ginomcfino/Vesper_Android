@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.company.vesper.databinding.FragmentSettingsBinding;
 
+////// int color = Color.parseColor("#2222FF");
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {

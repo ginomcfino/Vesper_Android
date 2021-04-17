@@ -1,7 +1,7 @@
 package com.company.vesper.chat;
 
 import com.company.vesper.State;
-import com.company.vesper.signal.Signal;
+import com.company.vesper.dbModels.Signal;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -48,13 +48,7 @@ public class ChatLoader {
 
                     docSnap.getDocumentReference("signal").get().addOnCompleteListener(signalTask -> {
                         DocumentSnapshot signal = signalTask.getResult();
-                        Signal summary = new Signal(
-                                signal.getString("ticker"),
-                                signal.getDouble("buy"),
-                                signal.getDouble("sell"),
-                                signal.getDouble("loss"),
-                                signal.getBoolean("active"),
-                                signal.getDocumentReference("group"));
+                        Signal summary = new Signal(signal);
                         chm.setSignalMessage(summary);
                         // decrement unloaded pieces of document
                         unloaded_count -= 1;

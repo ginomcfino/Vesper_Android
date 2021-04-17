@@ -46,9 +46,9 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         txtChange.setText(dailyChangeString);
 
         if (item.dailyChange > 0) {
-            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
+            txtChange.setTextColor(Helpers.getColor(R.color.active_signal));
         } else {
-            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
+            txtChange.setTextColor(Helpers.getColor(R.color.expired_signal));
         }
 
         convertView.setOnClickListener(v -> {
