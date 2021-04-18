@@ -4,7 +4,11 @@ package com.company.vesper.lib;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.core.content.ContextCompat;
+
 import com.company.vesper.R;
+
+import static com.company.vesper.App.getContext;
 
 /**
  * Helper class to keep a hold on the preference file to make easy access.
@@ -16,10 +20,9 @@ public class Preferences {
     public static void init(Context context) {
         preferences = context.getSharedPreferences("com.company.vesper.preferences", Context.MODE_PRIVATE);
 
-
         // Load in color prefs
-        Helpers.putColor(R.color.expired_signal, getValue("EXPIRE_COLOR", R.color.expired_signal));
-        Helpers.putColor(R.color.active_signal, getValue("ACTIVE_COLOR", R.color.active_signal));
+        Helpers.putColor(R.color.expired_signal, getValue("EXPIRE_COLOR", ContextCompat.getColor(getContext(),R.color.expired_signal)));
+        Helpers.putColor(R.color.active_signal, getValue("ACTIVE_COLOR", ContextCompat.getColor(getContext(),R.color.active_signal)));
     }
 
     public static void putValue(String key, String value) {
@@ -59,6 +62,10 @@ public class Preferences {
 
     public static boolean getValue(String key, boolean defaultValue) {
         return preferences.getBoolean(key, defaultValue);
+    }
+
+    public static void clear() {
+        preferences.edit().clear().commit();
     }
 
     public static boolean contains(String key) {
