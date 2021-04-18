@@ -38,21 +38,7 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         // Bind the views
         TextView watchListRow = convertView.findViewById(R.id.tickerView);
         TextView txtPrice = convertView.findViewById(R.id.txtPrice);
-
-        // Approach 1:
-        //txtPrice.setText("Loading...");
         TextView txtChange = convertView.findViewById(R.id.txtChange);
-        //txtChange.setText("Loading...");
-        // While the data loads, we set these values to loading...
-//        watchListRow.setText("Loading...");
-//        txtPrice.setText("Loading...");
-//        txtChange.setText("Loading...");
-        // Approach 2:
-
-//        if ( txtPrice.getText() == "$0.0" ){
-//            txtPrice.setText("Loading...");
-//        }
-
         // Populate the data into the template view using the data object
         watchListRow.setText(item.Ticker.toString());
         String closingPriceString = "$" + String.valueOf(item.closingPrice);

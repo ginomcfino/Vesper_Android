@@ -45,8 +45,6 @@ public class ModifyWatchlist extends Fragment {
         // Attach the adapter to a ListView
         ListView listView = binding.watchlist;
         listView.setAdapter(adapter);
-
-
         //Instantiate search bar and get string
         SearchView simpleSearchView = view.findViewById(R.id.searchBar);
         // perform set on query text listener
