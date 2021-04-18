@@ -1,6 +1,10 @@
 package com.company.vesper.chat;
 
 import com.company.vesper.lib.Helpers;
+<<<<<<< Updated upstream
+=======
+import com.company.vesper.dbModels.Signal;
+>>>>>>> Stashed changes
 
 public class ChatMessage {
     private static String TAG = ChatMessage.class.getName();

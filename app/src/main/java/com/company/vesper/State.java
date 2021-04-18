@@ -2,6 +2,8 @@ package com.company.vesper;
 
 import android.icu.number.NumberFormatter;
 
+import com.company.vesper.dbModels.GroupInfo;
+import com.company.vesper.dbModels.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -78,6 +80,7 @@ public class State {
         deviceFCMToken = token;
     }
 
+<<<<<<< Updated upstream
     public static class UserInfo {
         FirebaseUser user;
         String display_name;
@@ -162,4 +165,6 @@ public class State {
             return name;
         }
     }
+=======
+>>>>>>> Stashed changes
 }

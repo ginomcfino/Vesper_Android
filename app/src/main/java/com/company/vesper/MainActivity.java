@@ -10,10 +10,16 @@ import android.widget.Toast;
 
 import com.company.vesper.chat.ChatFragment;
 import com.company.vesper.databinding.ActivityMainBinding;
+<<<<<<< Updated upstream
 import com.company.vesper.services.AlphaVantage;
 
 import java.util.ArrayList;
 import java.util.List;
+=======
+import com.company.vesper.lib.Preferences;
+import com.company.vesper.services.FCMServiceHandler;
+import com.company.vesper.signal.SignalFragment;
+>>>>>>> Stashed changes
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
@@ -26,7 +32,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setCurrentFragment(new HomeFragment());
+        FCMServiceHandler.registerUser(State.getUser().getUid());
+
+        String firstPage = Preferences.getValue("FirstPage", "Home");
+        if (firstPage.equals("Home")) {
+            setCurrentFragment(new HomeFragment());
+        } else if (firstPage.equals("Chat")){
+            setCurrentFragment(new ChatFragment());
+        } else if (firstPage.equals("Signal")){
+            setCurrentFragment(new SignalFragment());
+        }
 
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {

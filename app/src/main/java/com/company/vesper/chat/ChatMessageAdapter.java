@@ -16,6 +16,11 @@ import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.ChatMessageLayoutLeaderBinding;
 import com.company.vesper.databinding.ChatMessageLayoutRegularBinding;
+<<<<<<< Updated upstream
+=======
+import com.company.vesper.lib.Helpers;
+import com.company.vesper.dbModels.Signal;
+>>>>>>> Stashed changes
 
 import java.util.List;
 

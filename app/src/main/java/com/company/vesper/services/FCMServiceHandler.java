@@ -40,11 +40,11 @@ public class FCMServiceHandler extends FirebaseMessagingService {
         intent.putExtra("chatID", remoteMessage.getData().get("chatID"));
         intent.putExtra("sender", remoteMessage.getData().get("sender"));
         intent.putExtra("message", remoteMessage.getData().get("message"));
+        intent.putExtra("time", remoteMessage.getData().get("time"));
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         super.onMessageReceived(remoteMessage);
-
     }
 
     /**
@@ -61,4 +61,8 @@ public class FCMServiceHandler extends FirebaseMessagingService {
                 });
     }
 
+
+    public static void registerUser(String userID) {
+        State.getDatabase().collection("users").document(userID).update("device", State.getDeviceFCMToken());
+    }
 }

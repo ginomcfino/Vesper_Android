@@ -1,6 +1,8 @@
 package com.company.vesper.services;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.icu.text.UFormat;
 import android.util.Log;
 
 import com.anychart.AnyChart;
@@ -9,6 +11,8 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
 import com.anychart.charts.Stock;
+import com.anychart.core.cartesian.series.Line;
+import com.anychart.core.ui.LabelsFactory;
 import com.company.vesper.MainActivity;
 import com.company.vesper.databinding.FragmentHomeBinding;
 import com.company.vesper.lib.HttpConnectionLibrary;
@@ -23,6 +27,16 @@ import java.util.List;
 
 public class AlphaVantage {
 
+<<<<<<< Updated upstream
+=======
+    public static class StockData {
+        public String Ticker;
+        public String Name;
+        public Double dailyChange;
+        public Double currentPrice;
+    }
+
+>>>>>>> Stashed changes
 
     private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_DAILY&symbol=";
     private static String url2 = "&outputsize=compact";
@@ -125,7 +139,7 @@ public class AlphaVantage {
             - days: Number of past days to display in the graph
             - view: AnyChartView in which to display the graph
      */
-    public static void makeStockChart(String symbol, Integer days, AnyChartView view){
+    public static void makeStockChart(String symbol, Boolean change, Integer days, AnyChartView view){
         AnyChartView anyChartView = view;
 
         Cartesian cartesian = AnyChart.line();
@@ -135,7 +149,20 @@ public class AlphaVantage {
             Log.d("TESTING","Data: " + filteredResponse.toString());
 
             cartesian.label(symbol);
-            cartesian.line(filteredResponse);
+            cartesian.xAxis(0).labels().enabled(false);
+
+            //LabelsFactory labelsFactory = cartesian.xAxis(0).labels();
+
+            Line l = cartesian.line(filteredResponse);
+
+
+
+            if(change == true){
+                l.color("green");
+            }else{
+                l.color("red");
+            }
+
             anyChartView.setChart(cartesian);
 
         });

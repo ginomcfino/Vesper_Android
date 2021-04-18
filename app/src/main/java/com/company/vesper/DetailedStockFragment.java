@@ -1,16 +1,21 @@
 package com.company.vesper;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.company.vesper.databinding.FragmentChatBinding;
 import com.company.vesper.databinding.FragmentDetailedStockBinding;
 import com.company.vesper.services.AlphaVantage;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +34,7 @@ public class DetailedStockFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+<<<<<<< Updated upstream
     private FragmentDetailedStockBinding binding;
 
 
@@ -52,6 +58,20 @@ public class DetailedStockFragment extends Fragment {
 
     public DetailedStockFragment() {
         // Required empty public constructor
+=======
+
+    private String ticker;
+    private double currentPrice;
+    private double dailyChange;
+
+    private FragmentDetailedStockBinding binding;
+
+
+    public DetailedStockFragment(String ticker, double currentPrice, double dailyChange) {
+        this.ticker = ticker;
+        this.currentPrice = currentPrice;
+        this.dailyChange = dailyChange;
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -69,8 +89,33 @@ public class DetailedStockFragment extends Fragment {
         binding = FragmentDetailedStockBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
         AnyChartView view = binding.anyChartView;
+        view.setProgressBar(binding.progressBar);
 
+        TextView textTicker = binding.textViewTicker;
+        TextView textCurrentPrice = binding.textViewPrice;
+        TextView textChange = binding.textViewChange;
+
+
+
+        textTicker.setText(ticker);
+
+        textCurrentPrice.setText(Double.toString(currentPrice));
+
+        if(dailyChange > 0){
+            textChange.setTextColor(Color.GREEN);
+            textChange.setText("+ $" + Double.toString(dailyChange));
+            AlphaVantage.makeStockChart(ticker, true, 30, view);
+        }else {
+            textChange.setTextColor(Color.RED);
+            textChange.setText("- $" + Double.toString(dailyChange));
+            AlphaVantage.makeStockChart(ticker, false, 30, view);
+
+        }
+
+<<<<<<< Updated upstream
         AlphaVantage.makeStockChart("TSLA",10,view);
+=======
+>>>>>>> Stashed changes
 
         return binding.getRoot();
     }

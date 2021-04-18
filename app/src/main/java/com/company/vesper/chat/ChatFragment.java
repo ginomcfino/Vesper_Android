@@ -1,7 +1,14 @@
 package com.company.vesper.chat;
 
 import android.annotation.SuppressLint;
+<<<<<<< Updated upstream
 import android.icu.number.NumberFormatter;
+=======
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+>>>>>>> Stashed changes
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,9 +20,17 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+<<<<<<< Updated upstream
+=======
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.company.vesper.MainActivity;
+>>>>>>> Stashed changes
 import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentChatBinding;
+import com.company.vesper.dbModels.GroupInfo;
 import com.company.vesper.lib.HttpConnectionLibrary;
 
 import java.util.ArrayList;
@@ -32,6 +47,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private List<ChatMessage> messages;
     private ChatMessageAdapter adapter;
+<<<<<<< Updated upstream
 
     private boolean isLoadingMessage;
 
@@ -39,6 +55,9 @@ public class ChatFragment extends Fragment {
         // Required empty public constructor
 
     }
+=======
+    private BroadcastReceiver messageReceiver;
+>>>>>>> Stashed changes
 
 
     @Override
@@ -46,6 +65,15 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         init();
+
+        registerMessageHandler();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // Need to unregister the message receiver when the activity is destroyed.
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(messageReceiver);
     }
 
     private void init() {
@@ -55,7 +83,6 @@ public class ChatFragment extends Fragment {
                 messages.addAll(m);
                 adapter.notifyDataSetChanged();
             });
-
         }
     }
 
@@ -108,7 +135,55 @@ public class ChatFragment extends Fragment {
         return binding.getRoot();
     }
 
+<<<<<<< Updated upstream
     public void sendMessage(View v) {
+=======
+    /**
+     * Event handle for display switch group menu. When clicked will reload fragment to the new group
+     *
+     * @param v The view that is clicked to display this menu.
+     */
+    private void showSwitchGroupsMenu(View v) {
+        PopupMenu popup = new PopupMenu(getContext(), v);
+
+        List<GroupInfo> groups = new ArrayList<>();
+        groups.addAll(State.getUser().getGroups());
+        if (groups.size() == 0) {
+            // if the user is only in one single group, do not do anything
+            return;
+        }
+
+        for (int i = 0; i < groups.size(); ++i) {
+            // remove current group from the list
+            if (groups.get(i).getID().equals(State.getGroup().getID())) {
+                groups.remove(i);
+                break;
+            }
+        }
+
+        popup.setOnMenuItemClickListener(menuItem -> {
+            int index = menuItem.getItemId();
+            State.getDatabase().collection("groups").document(groups.get(index).getID()).get().addOnCompleteListener(task -> {
+                // swap groups
+                State.setGroup(task.getResult());
+                ((MainActivity) getActivity()).setCurrentFragment(new ChatFragment());
+            });
+            return true;
+        });
+
+        for (int i = 0; i < groups.size(); i++) {
+            popup.getMenu().add(0, i, i, groups.get(i).getName());
+        }
+
+        popup.getMenuInflater().inflate(R.menu.blank_menu, popup.getMenu());
+        popup.show();
+    }
+
+    /**
+     * Event handler for sending message. Bound to btnSendMessage;
+     */
+    private void sendMessage() {
+>>>>>>> Stashed changes
         if (binding.edtMessage.getText().length() == 0) {
             return;
         }
@@ -133,5 +208,28 @@ public class ChatFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         binding.edtMessage.setText("");
+    }
+
+
+    /**
+     * Register to cloud messaging service to handle messages.
+     */
+    private void registerMessageHandler() {
+        messageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (!intent.getStringExtra("chatID").equals(State.getGroup().getID())) {
+                    return; // not current chat
+                }
+
+                if (intent.getStringExtra("sender").equals(State.getUser().getUid())) {
+                    return; // current user sent the message, don't need to update
+                }
+                String senderID = intent.getStringExtra("sender");
+                adapter.add(new ChatMessage(State.getName(senderID), senderID, senderID.equals(State.getGroup().getSignaler()), intent.getStringExtra("message"), intent.getIntExtra("time", 0)));
+            }
+        };
+
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(messageReceiver, new IntentFilter("NewMessage"));
     }
 }
