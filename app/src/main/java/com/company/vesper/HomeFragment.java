@@ -59,7 +59,13 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         loadSignalList();
+        loadWatchlist();
 
+
+        return view;
+    }
+
+    private void loadWatchlist() {
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
         // Initialize custom watchlist adapter
@@ -68,33 +74,6 @@ public class HomeFragment extends Fragment {
         // Attach the adapter to a ListView
         ListView listView = binding.listViewObject;
         listView.setAdapter(adapter);
-
-        //Instantiate search bar and get string
-        SearchView simpleSearchView = (SearchView) view.findViewById(R.id.searchBar);
-        // perform set on query text listener
-        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String Ticker) {
-                try {
-                    // Try to add the ticker to the watchlist
-                    State.getUser().addToWatchlist(Ticker);
-                    adapter.notifyDataSetChanged();
-                }
-                catch(Exception e) {
-                    System.out.println("Not able to add to watchlist, wait and try again");
-                } finally{
-                    // May be needed later
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String Ticker) {
-                // Maybe show options from the list of possible tickers
-                // Needs to have access to some AlphaVantage API that returns a list of
-                return false;
-            }
-        });
 
         List<String> tickerSymbols = State.getUser().getWatchlist();
 
@@ -107,7 +86,6 @@ public class HomeFragment extends Fragment {
                         adapter.notifyDataSetChanged();
             });
         }
-        return view;
     }
 
     /**

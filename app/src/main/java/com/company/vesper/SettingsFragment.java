@@ -14,6 +14,7 @@ import com.company.vesper.dialogs.EditTextDialog;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.lib.Preferences;
 import com.company.vesper.logins.LoginActivity;
+import com.company.vesper.watchlist.ModifyWatchlist;
 
 ////// int color = Color.parseColor("#2222FF");
 
@@ -40,6 +41,11 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
         bindColorButtons();
+
+        binding.btnWatchlist.setOnClickListener(view -> {
+            ModifyWatchlist fragment = new ModifyWatchlist();
+            MainActivity.instance.setCurrentFragment(fragment);
+        });
 
         binding.btnlogout.setOnClickListener(view -> {
             Preferences.clear();

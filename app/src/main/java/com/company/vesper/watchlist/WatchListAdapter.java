@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,9 +36,23 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.watch_list_item, parent, false);
         }
         // Bind the views
-        TextView watchListRow = (TextView) convertView.findViewById(R.id.tickerView);
-        TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
-        TextView txtChange = (TextView) convertView.findViewById(R.id.txtChange);
+        TextView watchListRow = convertView.findViewById(R.id.tickerView);
+        TextView txtPrice = convertView.findViewById(R.id.txtPrice);
+
+        // Approach 1:
+        //txtPrice.setText("Loading...");
+        TextView txtChange = convertView.findViewById(R.id.txtChange);
+        //txtChange.setText("Loading...");
+        // While the data loads, we set these values to loading...
+//        watchListRow.setText("Loading...");
+//        txtPrice.setText("Loading...");
+//        txtChange.setText("Loading...");
+        // Approach 2:
+
+//        if ( txtPrice.getText() == "$0.0" ){
+//            txtPrice.setText("Loading...");
+//        }
+
         // Populate the data into the template view using the data object
         watchListRow.setText(item.Ticker.toString());
         String closingPriceString = "$" + String.valueOf(item.closingPrice);
