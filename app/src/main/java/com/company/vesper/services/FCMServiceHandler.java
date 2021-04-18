@@ -2,10 +2,14 @@ package com.company.vesper.services;
 
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.company.vesper.R;
 import com.company.vesper.State;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -26,7 +30,6 @@ public class FCMServiceHandler extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        // TODO When a new token gets generated. We will want to push this to firestore.
     }
 
     /**
@@ -44,6 +47,15 @@ public class FCMServiceHandler extends FirebaseMessagingService {
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "VESPER")
+                .setContentTitle("New Message!")
+                .setContentText(String.format("Message received in channel"))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(0, builder.build());
+
+//        Toast.makeText(this, "message received", Toast.LENGTH_SHORT).show();
         super.onMessageReceived(remoteMessage);
     }
 
