@@ -5,8 +5,9 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment"
-    android:orientation="vertical">
+    android:layout_marginLeft="15sp"
+    android:orientation="vertical"
+    tools:context=".HomeFragment">
 
     <FrameLayout
         android:id="@+id/topLayout"
@@ -28,42 +29,62 @@
             android:id="@+id/searchBar"
             android:layout_width="357dp"
             android:layout_height="62dp"
+            android:layout_marginLeft="15sp"
             android:queryHint="@string/search_stock_prompt">
 
         </SearchView>
 
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginLeft="15sp">
 
             <TextView
-                android:id="@+id/header1"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="TextView"
-                android:textSize="19sp" />
+                android:id="@+id/tickerView"
+                android:layout_width="90dp"
+                android:layout_height="45dp"
+                android:text="Ticker"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.508" />
 
             <TextView
-                android:id="@+id/header2"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="TextView"
-                android:textSize="19sp" />
+                android:id="@+id/txtPrice"
+                android:layout_width="90dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:text="Price"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tickerView"
+                app:layout_constraintTop_toTopOf="@+id/tickerView" />
 
             <TextView
-                android:id="@+id/header3"
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:text="TextView"
-                android:textSize="19sp" />
-
-        </LinearLayout>
+                android:id="@+id/txtChange"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginStart="32dp"
+                android:text="Daily Change"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/txtPrice"
+                app:layout_constraintTop_toTopOf="@+id/txtPrice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ListView
             android:id="@+id/listViewObject"
             android:layout_width="377dp"
             android:layout_height="375dp"
+            android:layout_marginLeft="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"

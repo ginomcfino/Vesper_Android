@@ -60,16 +60,6 @@ public class HomeFragment extends Fragment {
 
         loadSignalList();
 
-        // Find titles views within FragmentView
-        TextView companyTitle = (TextView) view.findViewById(R.id.header1);
-        TextView txtPrice = (TextView) view.findViewById(R.id.header2);
-        TextView txtChange = (TextView) view.findViewById(R.id.header3);
-
-        // Set titles
-        companyTitle.setText("Company");
-        txtPrice.setText("Price");
-        txtChange.setText("Daily Change");
-
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
         // Initialize custom watchlist adapter
