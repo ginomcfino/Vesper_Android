@@ -36,18 +36,21 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // TODO! remove this in the future, only here for debugging.
         if (Preferences.contains("email")) {
             login(Preferences.getValue("email", ""), Preferences.getValue("password", ""), this);
+            binding.edtEmail.setText(Preferences.getValue("email", ""));
+            binding.edtPassword.setText(Preferences.getValue("password", ""));
         }
     }
 
     public void login(View v) {
         if (binding.edtEmail.getText().length() == 0) {
             Toast.makeText(this, getString(R.string.blank_email), Toast.LENGTH_SHORT).show();
+            return;
         }
         if (binding.edtPassword.getText().length() == 0) {
             Toast.makeText(this, getString(R.string.blank_password), Toast.LENGTH_SHORT).show();
+            return;
         }
 
         login(binding.edtEmail.getText().toString(), binding.edtPassword.getText().toString(), this);
