@@ -23,9 +23,10 @@
         android:id="@+id/txtPrice"
         android:layout_width="90dp"
         android:layout_height="45dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="15dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:text="Loading..."
         app:layout_constraintStart_toEndOf="@+id/tickerView"
         app:layout_constraintTop_toTopOf="@+id/tickerView" />
 
@@ -33,10 +34,24 @@
         android:id="@+id/txtChange"
         android:layout_width="90dp"
         android:layout_height="45dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="15dp"
+        android:text="Loading..."
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/txtPrice"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/txtPrice"
         app:layout_constraintTop_toTopOf="@+id/txtPrice" />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/XButton"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/txtChange"-->
+<!--        app:srcCompat="@android:drawable/ic_delete" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
