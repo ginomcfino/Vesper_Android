@@ -3,6 +3,9 @@ package com.company.vesper.chat;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.dbModels.Signal;
 
+/**
+ * Container class that holds the data relevant to a message.
+ */
 public class ChatMessage {
     private static String TAG = ChatMessage.class.getName();
 

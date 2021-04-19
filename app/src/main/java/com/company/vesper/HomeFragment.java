@@ -59,17 +59,13 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         loadSignalList();
+        loadWatchlist();
 
-        // Find titles views within FragmentView
-        TextView companyTitle = (TextView) view.findViewById(R.id.header1);
-        TextView txtPrice = (TextView) view.findViewById(R.id.header2);
-        TextView txtChange = (TextView) view.findViewById(R.id.header3);
 
-        // Set titles
-        companyTitle.setText("Company");
-        txtPrice.setText("Price");
-        txtChange.setText("Daily Change");
+        return view;
+    }
 
+    private void loadWatchlist() {
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
         // Initialize custom watchlist adapter
@@ -79,45 +75,17 @@ public class HomeFragment extends Fragment {
         ListView listView = binding.listViewObject;
         listView.setAdapter(adapter);
 
-        //Instantiate search bar and get string
-        SearchView simpleSearchView = (SearchView) view.findViewById(R.id.searchBar);
-        // perform set on query text listener
-        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String Ticker) {
-                try {
-                    // Try to add the ticker to the watchlist
-                    State.getUser().addToWatchlist(Ticker);
-                    adapter.notifyDataSetChanged();
-                }
-                catch(Exception e) {
-                    System.out.println("Not able to add to watchlist, wait and try again");
-                } finally{
-                    // May be needed later
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String Ticker) {
-                // Maybe show options from the list of possible tickers
-                // Needs to have access to some AlphaVantage API that returns a list of
-                return false;
-            }
-        });
-
         List<String> tickerSymbols = State.getUser().getWatchlist();
 
         // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
         for (int i = 0; i < tickerSymbols.size(); i++) {
             // add it to watchlist_array
             AlphaVantage.getCurrentStockData(tickerSymbols.get(i), stockData -> {
-                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.currentPrice, stockData.dailyChange);
+                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.currentPrice, stockData.dailyChange, stockData.percentChange);
                         watchlist_array.add(watchListItem);
                         adapter.notifyDataSetChanged();
             });
         }
-        return view;
     }
 
     /**
@@ -133,6 +101,10 @@ public class HomeFragment extends Fragment {
         List<DocumentReference> groups = new ArrayList<>();
         for (GroupInfo group : State.getUser().getGroups()) {
             groups.add(group.getRef());
+        }
+
+        if (groups.size() == 0) {
+            return;
         }
 
         State.getDatabase().collection("signals").whereIn("group", groups).whereEqualTo("active", true).get().addOnCompleteListener(task -> {

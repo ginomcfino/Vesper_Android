@@ -8,6 +8,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Container class that holds the data relevant to a user
+ */
 public class UserInfo {
     private static String TAG = UserInfo.class.getName();
 

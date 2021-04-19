@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Core signal fragment that lists all active and expired signals of groups that a user is in.
  */
 public class SignalFragment extends Fragment {
 
@@ -41,7 +40,6 @@ public class SignalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignalBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
 
         List<DocumentReference> groups = new ArrayList<>();
         for (GroupInfo group : State.getUser().getGroups()) {
@@ -55,6 +53,10 @@ public class SignalFragment extends Fragment {
         transaction.replace(R.id.activeSignals, activeSignalList, null);
         transaction.replace(R.id.expiredSignals, expiredSignalList, null);
         transaction.commit();
+
+        if (groups.size() == 0) {
+            return binding.getRoot();
+        }
 
         State.getDatabase().collection("signals").whereIn("group", groups).get().addOnCompleteListener(task -> {
             QuerySnapshot snapshots = task.getResult();

@@ -96,6 +96,11 @@ public class Helpers {
         return binding.getRoot();
     }
 
+    /**
+     * Provides a static access to a dict of colors
+     * @param id The id of the color requested
+     * @return The color code of the corresponding ID
+     */
     public static int getColor(int id) {
         if (!Colors.containsKey(id)) {
             Colors.put(id, ContextCompat.getColor(getContext(), id));
@@ -104,7 +109,21 @@ public class Helpers {
         return Colors.get(id);
     }
 
+    /**
+     * Provides a static access to a dict of color
+     * @param id The id of the color being stored
+     * @param val The color code of the color being stored
+     */
     public static void putColor(int id, int val) {
         Colors.put(id, val);
+    }
+
+    /**
+     * Helper method to convert color code in int to String form
+      * @param code int form of color code
+     * @return Formatted string form of the color
+     */
+    public static String formatColor(int code) {
+        return String.format("#%06X", 0xFFFFFF & code);
     }
 }

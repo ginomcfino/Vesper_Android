@@ -11,8 +11,7 @@ import android.view.ViewGroup;
 import com.company.vesper.databinding.FragmentSignalDisplayBinding;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * A modified list view with title used to display signal items.
  */
 public class SignalDisplayFragment extends Fragment {
 

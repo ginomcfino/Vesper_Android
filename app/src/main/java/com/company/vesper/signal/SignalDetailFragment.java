@@ -17,8 +17,7 @@ import com.company.vesper.services.AlphaVantage;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Detailed page of a signal
  */
 public class SignalDetailFragment extends Fragment {
     private Signal signal;
@@ -78,7 +77,7 @@ public class SignalDetailFragment extends Fragment {
         return view;
     }
 
-    public void closeSignal() {
+    protected void closeSignal() {
         signal.closeSignal();
         binding.btnAction.setVisibility(View.INVISIBLE);
 
@@ -87,13 +86,13 @@ public class SignalDetailFragment extends Fragment {
         binding.layout.addView(Helpers.createSignalMessage(getLayoutInflater(), signal, false), 0);
     }
 
-    public void upvote() {
+    protected void upvote() {
         signal.addUpvote(State.getUser().getUid());
         binding.btnAction.setText(getString(R.string.remove_signal_upvote));
         binding.btnAction.setOnClickListener(v -> remove_upvote());
     }
 
-    public void remove_upvote() {
+    protected void remove_upvote() {
         signal.removeUpvote(State.getUser().getUid());
 
         binding.btnAction.setText(getString(R.string.signal_upvote));

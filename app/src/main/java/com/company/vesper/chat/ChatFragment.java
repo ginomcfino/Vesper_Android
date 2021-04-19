@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -38,6 +41,7 @@ public class ChatFragment extends Fragment {
     private List<ChatMessage> messages;
     private ChatMessageAdapter adapter;
     private BroadcastReceiver messageReceiver;
+    private ChatLoader chatLoader;
 
 
     @Override
@@ -59,7 +63,11 @@ public class ChatFragment extends Fragment {
     private void init() {
         if (messages == null) {
             messages = new ArrayList<>();
-            ChatLoader.loadMessages(State.getGroup().getID(), m -> {
+            chatLoader = new ChatLoader();
+            if (State.getGroup() == null) {
+                return;
+            }
+            chatLoader.loadMessages(State.getGroup().getID(), m -> {
                 messages.addAll(m);
                 adapter.notifyDataSetChanged();
             });
@@ -75,30 +83,47 @@ public class ChatFragment extends Fragment {
 
         // Inflate the layout for this fragment
 
-        adapter = new ChatMessageAdapter(getContext(), messages);
+        adapter = new ChatMessageAdapter(Objects.requireNonNull(getContext()), messages);
         binding.listMessages.setAdapter(adapter);
 
-        binding.btnSend.setOnClickListener(v -> sendMessage());
-        binding.txtGroupName.setOnClickListener(v -> showSwitchGroupsMenu(v));
 
-        binding.txtGroupName.setText(State.getGroup().getName());
+        if (State.getGroup() == null) {
+            binding.txtGroupName.setText(getString(R.string.no_group));
+        } else {
+            binding.txtGroupName.setText(State.getGroup().getName());
+            binding.btnSend.setOnClickListener(v -> sendMessage());
+            binding.txtGroupName.setOnClickListener(this::showSwitchGroupsMenu);
+            binding.listMessages.setOnTouchListener(this::loadListener);
+        }
 
-        binding.listMessages.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_MOVE:
-                    // see if it top is at Zero, and first visible position is at 0
-                    if (binding.listMessages.getFirstVisiblePosition() == 0) {
-                        // TODO load messages here. Also set message load boolean to true.
-                        Toast.makeText(ChatFragment.this.getContext(), "Header Item Visible",
-                                Toast.LENGTH_SHORT).show();
-                        binding.listMessages.setOnTouchListener(null);
-                    }
-
-                    // TODO need to rebind this back after we have finished loading code.
-            }
-            return false;
-        });
         return binding.getRoot();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private boolean loadListener(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                // see if it top is at Zero, and first visible position is at 0
+                if (binding.listMessages.getFirstVisiblePosition() == 0) {
+                    chatLoader.loadMessages(State.getGroup().getID(), m -> {
+                        // We've loaded all the messages, can no longer load more messages
+                        if (m.size() == 0) {
+                            return;
+                        }
+                        messages.addAll( 0, m);
+
+                        int firstPos = binding.listMessages.getFirstVisiblePosition();
+                        adapter.notifyDataSetChanged();
+
+                        // Shift the view down to compensate for the newly loaded data.
+                        binding.listMessages.setSelection(m.size() - firstPos);
+                        binding.listMessages.setOnTouchListener(this::loadListener);
+                    });
+                    binding.listMessages.setOnTouchListener(null);
+                }
+
+        }
+        return false;
     }
 
     /**
@@ -129,7 +154,7 @@ public class ChatFragment extends Fragment {
             State.getDatabase().collection("groups").document(groups.get(index).getID()).get().addOnCompleteListener(task -> {
                 // swap groups
                 State.setGroup(task.getResult());
-                ((MainActivity) getActivity()).setCurrentFragment(new ChatFragment());
+                ((MainActivity) Objects.requireNonNull(getActivity())).setCurrentFragment(new ChatFragment());
             });
             return true;
         });
@@ -153,16 +178,16 @@ public class ChatFragment extends Fragment {
         String message = binding.edtMessage.getText().toString();
 
         HashMap<String, Object> params = new HashMap<>();
-        Boolean isSignaler = State.getUser().getUid().equals(State.getGroup().getSignaler());
+        boolean isSignaler = State.getUser().getUid().equals(State.getGroup().getSignaler());
 
         params.put("sender", State.getUser().getUid());
-        params.put("isSignaler", isSignaler.toString());
+        params.put("isSignaler", Boolean.toString(isSignaler));
         params.put("chatID", State.getGroup().getID());
         params.put("message", message);
         params.put("sourceDevice", State.getDeviceFCMToken());
 
-        Long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis() / 1000L);
-        params.put("time", time.toString());
+        long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis() / 1000L);
+        params.put("time", Long.toString(time));
 
         HttpConnectionLibrary.sendPOST("http://128.31.25.3/send-message", params);
 

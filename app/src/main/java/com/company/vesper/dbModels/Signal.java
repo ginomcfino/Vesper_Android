@@ -1,12 +1,19 @@
 package com.company.vesper.dbModels;
 
 import com.company.vesper.State;
+import com.company.vesper.lib.HttpConnectionLibrary;
 import com.company.vesper.services.AlphaVantage;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
+/**
+ * Container class that holds the data relevant to a signal
+ */
 public class Signal {
     private static String TAG = Signal.class.getName();
     private DocumentSnapshot snapshot;
@@ -62,20 +69,37 @@ public class Signal {
 
             if (sell < value) {
                 // If the performance is better than the sell price, this was an excellent signal
-                State.getGroup().incrementExcellentSignal();
+                group.get().addOnCompleteListener(task -> {
+                    DocumentSnapshot g = task.getResult();
+                    new GroupInfo(g).incrementExcellentSignal();
+                });
             } else if (buy < value) {
-                // If performance was better than buying price but didn't hit the sell price, we still consider it a good signal
-                State.getGroup().incrementGoodSignal();
+                group.get().addOnCompleteListener(task -> {
+                    DocumentSnapshot g = task.getResult();
+                    new GroupInfo(g).incrementGoodSignal();
+                });
             }
         });
 
         State.getDatabase().collection("signals").document(snapshot.getId()).update("active", false);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("chatID", group.getId());
+        params.put("signal", snapshot.getId());
+        params.put("sourceDevice", State.getDeviceFCMToken());
+
+        long time = (Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis() / 1000L);
+        params.put("time", Long.toString(time));
+
+        HttpConnectionLibrary.sendPOST("http://128.31.25.3/close-signal", params);
+
         this.active = false;
     }
 
     public void addUpvote(String userID) {
         upvoted_users.add(userID);
         State.getDatabase().collection("signals").document(snapshot.getId()).update("upvote_users", upvoted_users);
+
     }
 
     public void removeUpvote(String userID) {

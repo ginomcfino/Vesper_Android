@@ -29,6 +29,7 @@ public class AlphaVantage {
         public Double closingPrice;
         public Double dailyChange;
         public Double currentPrice;
+        public String percentChange;
     }
 
 
@@ -111,6 +112,7 @@ public class AlphaVantage {
                 data.Ticker = symbol;
                 data.currentPrice = fResponse.getDouble("05. price");
                 data.dailyChange = fResponse.getDouble("09. change");
+                data.percentChange = fResponse.getString("10. change percent");
 
                 callback.callback(data);
 
