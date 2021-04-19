@@ -79,7 +79,7 @@ public class State {
     }
 
     public static void setGroup(GroupInfo group) {
-        this.group = group;
+        group = group;
     }
 
     public static String getDeviceFCMToken() {
