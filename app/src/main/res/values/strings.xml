@@ -1,21 +1,21 @@
 <resources>
     <string name="app_name">Vesper_App</string>
     <string name="pull">pull</string>
-    <string name="yahoonews">YahooNews (Test)</string>
-    <string name="GET">GET REQ</string>
-    <string name="AV">AlphaVantage (test)</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="yahoonews" translatable="false">YahooNews (Test)</string>
+    <string name="GET" translatable="false">GET REQ</string>
+    <string name="AV" translatable="false">AlphaVantage (test)</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome" translatable="false">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="ask_to_signup">Signup for a Vesper Account</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="blank_email">Email can\'t be blank</string>
     <string name="blank_password">Password can\'t be empty</string>
     <string name="sign_up">Sign Up</string>
@@ -44,4 +44,6 @@
     <string name="modify_watchlist">Modify Watchlist</string>
     <string name="change_bear_color">Change bear color</string>
     <string name="change_bull_color">Change bull color</string>
+    <string name="added_ticker_toast">Added Ticker</string>
+    <string name="ticker_not_exist_toast">This ticker does not exist</string>
 </resources>

@@ -54,17 +54,6 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         String dailyChangeString =  "$" + String.valueOf(Helpers.formatDecimal(item.dailyChange));
         txtChange.setText(dailyChangeString);
 
-//        // We must record the position
-//        deleteButton.setTag(position);
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                UserInfo.removeFromWatchlist(item.Ticker);
-//                int positionToRemove = (int)view.getTag(); //get the position of the view to delete stored in the tag
-//                objects.remove(positionToRemove.intValue());
-//                notifyDataSetChanged();
-//            }
-//        });
         if (item.dailyChange > 0) {
             txtChange.setTextColor(Helpers.getColor(R.color.active_signal));
         } else {
@@ -78,14 +67,5 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
 
         return convertView;
     }
-//    public void removeItem(int position){
-//        //convert array to ArrayList, delete item and convert back to array
-//        ArrayList<String> a = new ArrayList<>(Arrays.asList(s1));
-//        a.remove(position);
-//        String[] s = new String[a.size()];
-//        s=a.toArray(s);
-//        s1 = s;
-//        notifyDataSetChanged(); //refresh your listview based on new data
-//
-//    }
+
 }

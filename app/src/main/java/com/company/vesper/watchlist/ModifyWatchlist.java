@@ -37,6 +37,8 @@ public class ModifyWatchlist extends Fragment {
     int deleteFlag = -1;
     int addFlag = 1;
 
+    int test = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +53,16 @@ public class ModifyWatchlist extends Fragment {
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
         WatchListAdapter adapter = new WatchListAdapter(Objects.requireNonNull(getContext()), watchlist_array);
+        // Attach the adapter to a ListView
+        ListView listView = binding.watchlist;
+        listView.setAdapter(adapter);
+
         // Initialize flag as 0
         flag = nullValue;
         // Instatiate both buttons
         addButton = view.findViewById(R.id.aButton);
         removeButton = view.findViewById(R.id.rButton);
+
         // If clicked set the submit button to add
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +73,6 @@ public class ModifyWatchlist extends Fragment {
             }
 
         });
-
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,12 +81,6 @@ public class ModifyWatchlist extends Fragment {
             }
         });
 
-        // Initialize custom watchlist adapter
-        // TODO: ACCESS THE watchlist_array TO delete from watchlist
-        //WatchListAdapter adapter = new WatchListAdapter(Objects.requireNonNull(getContext()), watchlist_array);
-        // Attach the adapter to a ListView
-        ListView listView = binding.watchlist;
-        listView.setAdapter(adapter);
         //Instantiate search bar and get string
         SearchView simpleSearchView = view.findViewById(R.id.searchBar);
         simpleSearchView.setSubmitButtonEnabled(true);
@@ -95,34 +95,46 @@ public class ModifyWatchlist extends Fragment {
                     if (flag == nullValue){
                         Toast.makeText(getActivity(), "Select Add or Remove", Toast.LENGTH_SHORT).show();
                     } else if (flag == deleteFlag){
-                        Toast.makeText(getActivity(), "Deleted Ticker", Toast.LENGTH_SHORT).show();
-                        // Check that Ticker is in proper format
-                        if (checkTicker(Ticker)) {
-                            //deleteStock(Ticker, adapter);
-                        }else{
-                            Toast.makeText(getActivity(), "Enter a Ticker", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getActivity(), "Capital Letters Only ", Toast.LENGTH_SHORT).show();
+
+                        for (WatchListItem currentItem : watchlist_array) {
+                            if (currentItem.Ticker.equals(Ticker)) {
+                                // Remove from our watchlist
+                                test = 1;
+                                watchlist_array.remove(currentItem);
+                                adapter.notifyDataSetChanged();
+                                // Remove for  DB
+                                UserInfo.removeFromWatchlist(Ticker);
+                            }
                         }
+
+//                        Toast.makeText(getActivity(), "Deleted Ticker", Toast.LENGTH_SHORT).show();
+//                        // Check that Ticker is in proper format
+//                        if (checkTicker(Ticker)) {
+//                            //deleteStock(Ticker, adapter);
+//                        }else{
+//                            Toast.makeText(getActivity(), "Enter a Ticker", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Capital Letters Only ", Toast.LENGTH_SHORT).show();
+//                        }
+
                     } else{
                         // Try to add the ticker to the watchlist
                         // Put this in a method.
-                        Toast.makeText(getActivity(), "Added Ticker", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.added_ticker_toast), Toast.LENGTH_SHORT).show();
                         // Pass the ticker to add and the adapter
                         //processIntoWatchlist(Ticker, adapter);
 
                         // add it to watchlist_array
                         WatchListItem watchListItem = new WatchListItem(Ticker);
-                        watchlist_array.add(watchListItem);
-                        adapter.notifyDataSetChanged();
                         // Now we wait for the real data
                         AlphaVantage.getCurrentStockData(Ticker, stockData -> {
+                            watchlist_array.add(watchListItem);
                             watchListItem.Name = stockData.Name;
                             watchListItem.closingPrice = stockData.currentPrice;
                             watchListItem.dailyChange = stockData.dailyChange;
                             adapter.notifyDataSetChanged();
+                            UserInfo.addToWatchlist(Ticker);
                         });
 
-                        UserInfo.addToWatchlist(Ticker);
                         // Check that its all caps lock
                     }
 
@@ -170,45 +182,38 @@ public class ModifyWatchlist extends Fragment {
         return view;
     }
 
-//    private void processIntoWatchlist(String Ticker,WatchListAdapter adapter){
-//        // add it to watchlist_array
-//        WatchListItem watchListItem = new WatchListItem(Ticker);
-//        watchlist_array.add(watchListItem);
-//        adapter.notifyDataSetChanged();
-//        // Now we wait for the real data
-//        AlphaVantage.getCurrentStockData(Ticker, stockData -> {
-//            watchListItem.Name = stockData.Name;
-//            watchListItem.closingPrice = stockData.currentPrice;
-//            watchListItem.dailyChange = stockData.dailyChange;
-//            adapter.notifyDataSetChanged();
-//        });
-//    }
-    // TODO: figuret this oit
-//    private void deleteStock(String Ticker,WatchListAdapter adapter) {
-//        watchlist_array.remove(Ticker);
-//        adapter.notifyDataSetChanged();
+//    private WatchListItem findWatchlistItem(String ticker, List<WatchListItem>  watchlist_array) {
+//
+//        for (WatchListItem currentItem : watchlist_array) {
+//            if (currentItem.Ticker == ticker) {
+//                return currentItem;
+//            }
+//        }
+//        return 0;
 //    }
 
-    private static boolean checkTicker(String Ticker) {
-        char ch;
-        boolean capitalFlag = false;
-        boolean lowerCaseFlag = false;
-        boolean numberFlag = false;
-        for(int i=0;i < Ticker.length();i++) {
-            ch = Ticker.charAt(i);
-            if( Character.isDigit(ch)) {
-                numberFlag = true;
-            }
-           else if (Character.isLowerCase(ch)) {
-                lowerCaseFlag = true;
-            }else if (!(Character.isUpperCase(ch))) {
-                lowerCaseFlag = true;
-            }
-            if(numberFlag || lowerCaseFlag || capitalFlag) {
-                return false;
-            }
-        }
-        return true;
-    }
+
+
+//    private static boolean checkTicker(String Ticker) {
+//        char ch;
+//        boolean capitalFlag = false;
+//        boolean lowerCaseFlag = false;
+//        boolean numberFlag = false;
+//        for(int i=0;i < Ticker.length();i++) {
+//            ch = Ticker.charAt(i);
+//            if( Character.isDigit(ch)) {
+//                numberFlag = true;
+//            }
+//           else if (Character.isLowerCase(ch)) {
+//                lowerCaseFlag = true;
+//            }else if (!(Character.isUpperCase(ch))) {
+//                lowerCaseFlag = true;
+//            }
+//            if(numberFlag || lowerCaseFlag || capitalFlag) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
 
 }
