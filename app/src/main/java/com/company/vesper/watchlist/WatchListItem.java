@@ -7,8 +7,8 @@ public class WatchListItem {
     public String Ticker;
     public String Name;
     public double dailyChange;
-    public String closingPriceLoading;
-    public String dailyChangeLoading;
+    public double currentPrice;
+    public String percentChange;
 
     public WatchListItem(String Ticker) {
         // Simple constructor for now

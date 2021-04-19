@@ -117,6 +117,8 @@ public class AlphaVantage {
                 callback.callback(data);
 
             } catch (JSONException e) {
+                data.currentPrice = -1.0;
+                callback.callback(data);
                 Log.d("TESTING","Error JSON Exception");
             }
         });

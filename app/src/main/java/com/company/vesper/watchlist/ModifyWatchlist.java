@@ -1,9 +1,6 @@
 package com.company.vesper.watchlist;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +8,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.company.vesper.R;
 import com.company.vesper.State;
@@ -27,7 +26,6 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class ModifyWatchlist extends Fragment {
-
 
 
     Button addButton;
@@ -92,9 +90,9 @@ public class ModifyWatchlist extends Fragment {
             public boolean onQueryTextSubmit(String Ticker) {
                 try {
                     // Check the flag
-                    if (flag == nullValue){
+                    if (flag == nullValue) {
                         Toast.makeText(getActivity(), "Select Add or Remove", Toast.LENGTH_SHORT).show();
-                    } else if (flag == deleteFlag){
+                    } else if (flag == deleteFlag) {
 
                         for (WatchListItem currentItem : watchlist_array) {
                             if (currentItem.Ticker.equals(Ticker)) {
@@ -106,57 +104,34 @@ public class ModifyWatchlist extends Fragment {
                                 UserInfo.removeFromWatchlist(Ticker);
                             }
                         }
-
-//                        Toast.makeText(getActivity(), "Deleted Ticker", Toast.LENGTH_SHORT).show();
-//                        // Check that Ticker is in proper format
-//                        if (checkTicker(Ticker)) {
-//                            //deleteStock(Ticker, adapter);
-//                        }else{
-//                            Toast.makeText(getActivity(), "Enter a Ticker", Toast.LENGTH_SHORT).show();
-//                            Toast.makeText(getActivity(), "Capital Letters Only ", Toast.LENGTH_SHORT).show();
-//                        }
-
-                    } else{
-                        // Try to add the ticker to the watchlist
-                        // Put this in a method.
-                        Toast.makeText(getActivity(), getString(R.string.added_ticker_toast), Toast.LENGTH_SHORT).show();
-                        // Pass the ticker to add and the adapter
-                        //processIntoWatchlist(Ticker, adapter);
-
+                    } else {
                         // add it to watchlist_array
                         WatchListItem watchListItem = new WatchListItem(Ticker);
                         // Now we wait for the real data
                         AlphaVantage.getCurrentStockData(Ticker, stockData -> {
-                            watchlist_array.add(watchListItem);
-                            watchListItem.Name = stockData.Name;
-                            watchListItem.closingPrice = stockData.currentPrice;
-                            watchListItem.dailyChange = stockData.dailyChange;
-                            adapter.notifyDataSetChanged();
-                            UserInfo.addToWatchlist(Ticker);
+                            if (stockData.currentPrice < 0) {
+                                Toast.makeText(getActivity(), "Not a valid ticker", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), getString(R.string.added_ticker_toast), Toast.LENGTH_SHORT).show();
+                                watchlist_array.add(watchListItem);
+                                adapter.notifyDataSetChanged();
+                                watchListItem.Name = stockData.Name;
+                                watchListItem.currentPrice = stockData.currentPrice;
+                                watchListItem.dailyChange = stockData.dailyChange;
+                                UserInfo.addToWatchlist(Ticker);
+                            }
                         });
 
-                        // Check that its all caps lock
                     }
 
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     System.out.println("Not able to add to watchlist, wait and try again");
                 }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String Ticker) {
-//                if (flag == nullValue){
-//                    // Send toast telling them to "Select add to add a stock "
-//                    // Send toast telling them to "Click add to add a stock"
-//                } else if (flag == deleteFlag ){
-//
-//
-//                } else {
-//                    // Check all caps
-//                    // If stock does not appear in menu in 1 minute, contact support
-//                }
+            public boolean onQueryTextChange(String s) {
                 return false;
             }
         });
@@ -192,7 +167,6 @@ public class ModifyWatchlist extends Fragment {
 //        }
 //        return 0;
 //    }
-
 
 
 //    private static boolean checkTicker(String Ticker) {
