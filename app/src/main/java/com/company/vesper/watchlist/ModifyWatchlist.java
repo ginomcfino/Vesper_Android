@@ -1,18 +1,20 @@
 package com.company.vesper.watchlist;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentModifyWatchlistBinding;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.services.AlphaVantage;
 
 import java.util.ArrayList;
@@ -25,6 +27,16 @@ import java.util.Objects;
  */
 public class ModifyWatchlist extends Fragment {
 
+
+    Button addButton;
+    Button removeButton;
+    int flag;
+    int nullValue = 0;
+    int deleteFlag = -1;
+    int addFlag = 1;
+
+    int test = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,38 +48,89 @@ public class ModifyWatchlist extends Fragment {
         FragmentModifyWatchlistBinding binding = FragmentModifyWatchlistBinding.inflate(inflater);
         View view = binding.getRoot();
 
-
         // Construct array of watchlists
         List<WatchListItem> watchlist_array = new ArrayList<>();
-        // Initialize custom watchlist adapter
         WatchListAdapter adapter = new WatchListAdapter(Objects.requireNonNull(getContext()), watchlist_array);
-
         // Attach the adapter to a ListView
         ListView listView = binding.watchlist;
         listView.setAdapter(adapter);
+
+        // Initialize flag as 0
+        flag = nullValue;
+        // Instatiate both buttons
+        addButton = view.findViewById(R.id.aButton);
+        removeButton = view.findViewById(R.id.rButton);
+
+        // If clicked set the submit button to add
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flag = addFlag;
+                // Toast you are adding a stock
+                Toast.makeText(getActivity(), getString(R.string.ready_add), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flag = deleteFlag;
+                Toast.makeText(getActivity(), getString(R.string.ready_delete), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //Instantiate search bar and get string
         SearchView simpleSearchView = view.findViewById(R.id.searchBar);
+        simpleSearchView.setSubmitButtonEnabled(true);
+        // Tell user what to do
+        simpleSearchView.setQueryHint("Select a Button Below before Submitting");
         // perform set on query text listener
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String Ticker) {
                 try {
-                    // Try to add the ticker to the watchlist
-                    State.getUser().addToWatchlist(Ticker);
-                    adapter.notifyDataSetChanged();
+                    // Check the flag
+                    if (flag == nullValue){
+                        Toast.makeText(getActivity(), getString(R.string.select_add_remove), Toast.LENGTH_SHORT).show();
+                    } else if (flag == deleteFlag){
+
+                        for (WatchListItem currentItem : watchlist_array) {
+                            if (currentItem.Ticker.equals(Ticker)) {
+                                // Remove from our watchlist
+                                test = 1;
+                                watchlist_array.remove(currentItem);
+                                adapter.notifyDataSetChanged();
+                                // Remove for  DB
+                                UserInfo.removeFromWatchlist(Ticker);
+                            }
+                        }
+                    } else {
+                        // add it to watchlist_array
+                        WatchListItem watchListItem = new WatchListItem(Ticker);
+                        // Now we wait for the real data
+                        AlphaVantage.getCurrentStockData(Ticker, stockData -> {
+                            if (stockData.currentPrice < 0) {
+                                Toast.makeText(getActivity(), "Not a valid ticker", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity(), getString(R.string.added_ticker_toast), Toast.LENGTH_SHORT).show();
+                                watchlist_array.add(watchListItem);
+                                adapter.notifyDataSetChanged();
+                                watchListItem.Name = stockData.Name;
+                                watchListItem.currentPrice = stockData.currentPrice;
+                                watchListItem.dailyChange = stockData.dailyChange;
+                                UserInfo.addToWatchlist(Ticker);
+                            }
+                        });
+                    }
                 }
                 catch(Exception e) {
-                    System.out.println("Not able to add to watchlist, wait and try again");
-                } finally{
-                    // May be needed later
+                    System.out.println(getString(R.string.add_error));
                 }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String Ticker) {
-                // Maybe show options from the list of possible tickers
-                // Needs to have access to some AlphaVantage API that returns a list of
+            public boolean onQueryTextChange(String s) {
                 return false;
             }
         });
@@ -80,6 +143,7 @@ public class ModifyWatchlist extends Fragment {
             WatchListItem watchListItem = new WatchListItem(tickerSymbols.get(i));
             watchlist_array.add(watchListItem);
             adapter.notifyDataSetChanged();
+            // Now we wait for the real data
             AlphaVantage.getCurrentStockData(tickerSymbols.get(i), stockData -> {
                 watchListItem.Name = stockData.Name;
                 watchListItem.currentPrice = stockData.currentPrice;
@@ -88,7 +152,29 @@ public class ModifyWatchlist extends Fragment {
                 adapter.notifyDataSetChanged();
             });
         }
-
         return view;
     }
+
+//    private static boolean checkTicker(String Ticker) {
+//        char ch;
+//        boolean capitalFlag = false;
+//        boolean lowerCaseFlag = false;
+//        boolean numberFlag = false;
+//        for(int i=0;i < Ticker.length();i++) {
+//            ch = Ticker.charAt(i);
+//            if( Character.isDigit(ch)) {
+//                numberFlag = true;
+//            }
+//           else if (Character.isLowerCase(ch)) {
+//                lowerCaseFlag = true;
+//            }else if (!(Character.isUpperCase(ch))) {
+//                lowerCaseFlag = true;
+//            }
+//            if(numberFlag || lowerCaseFlag || capitalFlag) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+
 }

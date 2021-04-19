@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.company.vesper.news.NewsWebView;
 import com.company.vesper.services.StockNews;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +35,7 @@ public class CustomNewsAdapter extends RecyclerView.Adapter<CustomNewsAdapter.Vi
         public final TextView textView2;
         public final TextView textView3;
         public ImageView imageView;
+        public View self;
 
 
 
@@ -51,6 +53,7 @@ public class CustomNewsAdapter extends RecyclerView.Adapter<CustomNewsAdapter.Vi
             textView2 = (TextView) v.findViewById(R.id.textBody);
             textView3 = (TextView) v.findViewById(R.id.textSource);
             imageView = (ImageView) v.findViewById(R.id.newsImageView);
+            self = v;
         }
 
         public TextView getTitleTextView() {
@@ -94,14 +97,20 @@ public class CustomNewsAdapter extends RecyclerView.Adapter<CustomNewsAdapter.Vi
         // with that element
         StockNews.NewsItem i = listNews.get(position);
 
+
         holder.getTitleTextView().setText(i.title);
+
+        holder.self.setOnClickListener(view -> {
+            NewsWebView fragment = new NewsWebView(i.news_url);
+            MainActivity.instance.setCurrentFragment(fragment);
+        });
 
         if(i.sentiment){
             holder.getTitleTextView().setTextColor(Color.parseColor("#1A9931"));
         }else{
             holder.getTitleTextView().setTextColor(Color.parseColor("#C73822"));
-
         }
+
         holder.getBodyTextView().setText(i.bodyText);
         holder.getSourceTextView().setText(i.sourceName);
 

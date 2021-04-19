@@ -23,8 +23,9 @@ public class StockNews {
         public String pictureUrl;
         public String sourceName;
         public Boolean sentiment;
+        public String news_url;
 
-        public NewsItem(String title, String bodyText, String pictureUrl, String sourceName, String sentiment){
+        public NewsItem(String title, String bodyText, String pictureUrl, String sourceName, String sentiment, String news_url){
             this.title = title;
             this.bodyText = bodyText;
             this.pictureUrl = pictureUrl;
@@ -35,6 +36,8 @@ public class StockNews {
             }else{
                 this.sentiment = false;
             }
+
+            this.news_url = news_url;
 
         }
     }
@@ -85,7 +88,7 @@ public class StockNews {
                     String sentiment = item.getString("sentiment");
                     String sourceName = item.getString("source_name");
 
-                    mDataset.add(new NewsItem(title,text,image_url,sourceName,sentiment));
+                    mDataset.add(new NewsItem(title,text,image_url,sourceName,sentiment, news_url));
                     //seriesData.add(new ValueDataEntry(keys, tResponse.getDouble("4. close")));
 
 
