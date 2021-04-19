@@ -9,9 +9,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Loader for chat fragment to get messages from the database and then pass it back through the UI callback.
+ * Keeps track of the earliest loaded data so that it can load back further when user scrolls upwards.
+ */
 public class ChatLoader {
-    private boolean isLoadingMessage;
-    private boolean isOldestMessage;
     private long lastLoadTime;
     private int unloaded_count = 0;
 

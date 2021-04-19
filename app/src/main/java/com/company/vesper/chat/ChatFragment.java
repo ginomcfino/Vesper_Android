@@ -98,8 +98,17 @@ public class ChatFragment extends Fragment {
                 // see if it top is at Zero, and first visible position is at 0
                 if (binding.listMessages.getFirstVisiblePosition() == 0) {
                     chatLoader.loadMessages(State.getGroup().getID(), m -> {
+                        // We've loaded all the messages, can no longer load more messages
+                        if (m.size() == 0) {
+                            return;
+                        }
                         messages.addAll( 0, m);
+
+                        int firstPos = binding.listMessages.getFirstVisiblePosition();
                         adapter.notifyDataSetChanged();
+
+                        // Shift the view down to compensate for the newly loaded data.
+                        binding.listMessages.setSelection(m.size() - firstPos);
                         binding.listMessages.setOnTouchListener(this::loadListener);
                     });
                     binding.listMessages.setOnTouchListener(null);

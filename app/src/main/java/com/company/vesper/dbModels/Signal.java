@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+/**
+ * Container class that holds the data relevant to a signal
+ */
 public class Signal {
     private static String TAG = Signal.class.getName();
     private DocumentSnapshot snapshot;

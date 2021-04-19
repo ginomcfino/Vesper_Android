@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     /**
      * Login with with Firebase User Auth
      * @param email email of user trying to login

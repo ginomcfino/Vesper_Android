@@ -12,6 +12,10 @@ import com.company.vesper.lib.Preferences;
 import com.company.vesper.services.FCMServiceHandler;
 import com.company.vesper.signal.SignalFragment;
 
+/**
+ * Main activity of the app. Holds the bottom navbar and a layout on top for switch fragments. Most page switches should utilize
+ * MainActivity.instance.setCurrentFragment() to switch the pages.
+ */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getName(); //TAG for debugging
 

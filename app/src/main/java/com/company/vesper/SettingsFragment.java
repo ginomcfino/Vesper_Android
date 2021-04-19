@@ -15,19 +15,12 @@ import com.company.vesper.lib.Helpers;
 import com.company.vesper.lib.Preferences;
 import com.company.vesper.logins.LoginActivity;
 
-////// int color = Color.parseColor("#2222FF");
-
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Fragment for the settings page.
  */
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
-
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,12 +32,7 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
-        bindColorButtons();
-
-        binding.btnlogout.setOnClickListener(view -> {
-            Preferences.clear();
-            Helpers.switchToActivity(getContext(), 0, LoginActivity.class);
-        });
+        bindAllButtonListeners();
 
         return binding.getRoot();
     }
@@ -81,6 +69,16 @@ public class SettingsFragment extends Fragment {
 
             dialog.show(fm, "");
         });
+    }
+
+    private void bindAllButtonListeners() {
+        bindColorButtons();
+
+        binding.btnlogout.setOnClickListener(view -> {
+            Preferences.clear();
+            Helpers.switchToActivity(getContext(), 0, LoginActivity.class);
+        });
+
     }
 
 

@@ -16,8 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * A dialog fragment that allows user to input some text. Can use a regex pattern to validate the input.
  */
 public class EditTextDialog extends DialogFragment {
     private String title;
