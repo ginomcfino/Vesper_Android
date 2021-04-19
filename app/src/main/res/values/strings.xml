@@ -9,7 +9,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome" translatable="false">"Welcome !"</string>
+    <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -46,5 +46,14 @@
     <string name="change_bull_color">Change bull color</string>
     <string name="added_ticker_toast">Added Ticker</string>
     <string name="ticker_not_exist_toast">This ticker does not exist</string>
+    <string name="select_add_remove">Select Add or Remove</string>
+    <string name="authorize_removal">Authorize Removal</string>
+    <string name="price">Price</string>
+    <string name="authorize_addition">Authorize Addition</string>
+    <string name="daily_change">Daily Change</string>
+    <string name="ticker">Ticker</string>
+    <string name="add_error">Not able to add to watchlist, wait and try again</string>
+    <string name="ready_add">Ready to Add, Press Submit</string>
+    <string name="ready_delete" >Ready to Delete, Press Submit</string>
     <string name="no_group">No group</string>
 </resources>
