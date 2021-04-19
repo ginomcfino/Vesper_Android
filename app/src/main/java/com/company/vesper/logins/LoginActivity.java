@@ -26,7 +26,7 @@ import java.util.List;
  * The first page the user sees. If login credentials are stored in preferences, we automatically log the users in.
  */
 public class LoginActivity extends AppCompatActivity {
-    private static String TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity";
 
     private ActivityLoginBinding binding;
 

@@ -48,10 +48,10 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         //Button deleteButton = convertView.findViewById(R.id.XButton);
 
         // Populate the data into the template view using the data object
-        watchListRow.setText(item.Ticker.toString());
-        String closingPriceString = "$" + String.valueOf(item.currentPrice);
+        watchListRow.setText(item.Ticker);
+        String closingPriceString = "$" + item.currentPrice;
         txtPrice.setText(closingPriceString);
-        String dailyChangeString =  "$" + String.valueOf(Helpers.formatDecimal(item.dailyChange));
+        String dailyChangeString =  "$" + Helpers.formatDecimal(item.dailyChange);
         txtChange.setText(dailyChangeString);
 
         if (item.dailyChange > 0) {

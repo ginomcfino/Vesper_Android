@@ -23,6 +23,7 @@ import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentChatBinding;
 import com.company.vesper.dbModels.GroupInfo;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.lib.HttpConnectionLibrary;
 
 import java.util.ArrayList;
@@ -178,9 +179,9 @@ public class ChatFragment extends Fragment {
         String message = binding.edtMessage.getText().toString();
 
         HashMap<String, Object> params = new HashMap<>();
-        boolean isSignaler = State.getUser().getUid().equals(State.getGroup().getSignaler());
+        boolean isSignaler = UserInfo.getUid().equals(State.getGroup().getSignaler());
 
-        params.put("sender", State.getUser().getUid());
+        params.put("sender", UserInfo.getUid());
         params.put("isSignaler", Boolean.toString(isSignaler));
         params.put("chatID", State.getGroup().getID());
         params.put("message", message);
@@ -191,7 +192,7 @@ public class ChatFragment extends Fragment {
 
         HttpConnectionLibrary.sendPOST("http://128.31.25.3/send-message", params);
 
-        messages.add(new ChatMessage(State.getUser().getName(), State.getUser().getUid(), isSignaler, message, time));
+        messages.add(new ChatMessage(State.getUser().getName(), UserInfo.getUid(), isSignaler, message, time));
         adapter.notifyDataSetChanged();
 
         binding.edtMessage.setText("");
@@ -209,7 +210,7 @@ public class ChatFragment extends Fragment {
                     return; // not current chat
                 }
 
-                if (intent.getStringExtra("sender").equals(State.getUser().getUid())) {
+                if (intent.getStringExtra("sender").equals(UserInfo.getUid())) {
                     return; // current user sent the message, don't need to update
                 }
                 String senderID = intent.getStringExtra("sender");

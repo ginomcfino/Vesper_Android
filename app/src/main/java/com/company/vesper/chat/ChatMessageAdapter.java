@@ -25,7 +25,7 @@ import java.util.List;
  * Adapter used for ListView in Chat to display messages
  */
 public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
-    private static String TAG = ChatMessageAdapter.class.getName();
+    private static final String TAG = ChatMessageAdapter.class.getName();
 
     public ChatMessageAdapter(@NonNull Context context, List<ChatMessage> messages) {
         super(context, 0, messages);

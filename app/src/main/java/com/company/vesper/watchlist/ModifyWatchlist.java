@@ -135,7 +135,7 @@ public class ModifyWatchlist extends Fragment {
             }
         });
 
-        List<String> tickerSymbols = State.getUser().getWatchlist();
+        List<String> tickerSymbols = UserInfo.getWatchlist();
 
         // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
         for (int i = 0; i < tickerSymbols.size(); i++) {

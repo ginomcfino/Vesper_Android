@@ -16,7 +16,7 @@ import com.company.vesper.databinding.FragmentSignalDisplayBinding;
 public class SignalDisplayFragment extends Fragment {
 
     private FragmentSignalDisplayBinding binding;
-    private String title;
+    private final String title;
 
     public SignalDisplayFragment(String title) {
         this.title = title;

@@ -27,7 +27,7 @@ import java.util.List;
 
 public class CustomNewsAdapter extends RecyclerView.Adapter<CustomNewsAdapter.ViewHolder> {
 
-    private List<StockNews.NewsItem> listNews;
+    private final List<StockNews.NewsItem> listNews;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -49,10 +49,10 @@ public class CustomNewsAdapter extends RecyclerView.Adapter<CustomNewsAdapter.Vi
                 }
             });
 
-            textView1 = (TextView) v.findViewById(R.id.textTitle);
-            textView2 = (TextView) v.findViewById(R.id.textBody);
-            textView3 = (TextView) v.findViewById(R.id.textSource);
-            imageView = (ImageView) v.findViewById(R.id.newsImageView);
+            textView1 = v.findViewById(R.id.textTitle);
+            textView2 = v.findViewById(R.id.textBody);
+            textView3 = v.findViewById(R.id.textSource);
+            imageView = v.findViewById(R.id.newsImageView);
             self = v;
         }
 

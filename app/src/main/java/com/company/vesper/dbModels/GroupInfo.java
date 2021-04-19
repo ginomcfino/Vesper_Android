@@ -9,12 +9,12 @@ import java.util.List;
  * Holds the data for a group, also some update functions to update values to the DB
  */
 public class GroupInfo {
-    private static String TAG = GroupInfo.class.getName();
-    private String name;
-    private String groupID;
-    private String signaler;
-    private List<String> members;
-    private int upvote_count;
+    private static final String TAG = GroupInfo.class.getName();
+    private final String name;
+    private final String groupID;
+    private final String signaler;
+    private final List<String> members;
+    private final int upvote_count;
     private int excellent_signals;
     private int good_signals;
 

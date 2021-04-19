@@ -15,17 +15,17 @@ import java.util.TimeZone;
  * Container class that holds the data relevant to a signal
  */
 public class Signal {
-    private static String TAG = Signal.class.getName();
-    private DocumentSnapshot snapshot;
+    private static final String TAG = Signal.class.getName();
+    private final DocumentSnapshot snapshot;
 
-    private String ticker;
-    private double buy;
-    private double sell;
-    private double loss;
+    private final String ticker;
+    private final double buy;
+    private final double sell;
+    private final double loss;
     private boolean active;
-    private String description;
-    private List<String> upvoted_users;
-    private DocumentReference group;
+    private final String description;
+    private final List<String> upvoted_users;
+    private final DocumentReference group;
 
 
     public Signal(DocumentSnapshot doc) {

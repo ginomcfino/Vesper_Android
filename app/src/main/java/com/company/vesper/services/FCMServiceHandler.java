@@ -23,7 +23,7 @@ import com.google.firebase.messaging.RemoteMessage;
  * All push messages from FCM will be received in {@link #onMessageReceived(RemoteMessage) onMessageReceived}
  */
 public class FCMServiceHandler extends FirebaseMessagingService {
-    private static String TAG = "FCMServiceHandler";
+    private static final String TAG = "FCMServiceHandler";
 
     /**
      * When a App is newly installed/wiped, it will generate a new token. We might want to push the token to firebase here for each user.

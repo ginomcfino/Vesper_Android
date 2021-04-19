@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import java.util.Map;
  * Custom Library for HTTP Restful Connections. Simplifies using Volley
  */
 public class HttpConnectionLibrary {
-    private static String TAG = "HttpConnectionLibrary";
+    private static final String TAG = "HttpConnectionLibrary";
     private static RequestQueue requestQueue;
 
     public static void init(Context context) {
@@ -115,11 +116,7 @@ public class HttpConnectionLibrary {
 
             @Override
             public byte[] getBody() {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    return null;
-                }
+                return requestBody == null ? null : requestBody.getBytes(StandardCharsets.UTF_8);
             }
 
             @Override

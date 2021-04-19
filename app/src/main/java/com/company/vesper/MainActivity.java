@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.company.vesper.chat.ChatFragment;
 import com.company.vesper.databinding.ActivityMainBinding;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.lib.Preferences;
 import com.company.vesper.services.FCMServiceHandler;
 import com.company.vesper.signal.SignalFragment;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        FCMServiceHandler.registerUser(State.getUser().getUid());
+        FCMServiceHandler.registerUser(UserInfo.getUid());
 
         String firstPage = Preferences.getValue("FirstPage", "Home");
         if (firstPage.equals("Home")) {

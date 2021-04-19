@@ -12,6 +12,7 @@ import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentSignalDetailBinding;
 import com.company.vesper.dbModels.Signal;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.services.AlphaVantage;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,7 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
  * Detailed page of a signal
  */
 public class SignalDetailFragment extends Fragment {
-    private Signal signal;
+    private final Signal signal;
 
     private FragmentSignalDetailBinding binding;
 
@@ -46,12 +47,12 @@ public class SignalDetailFragment extends Fragment {
             binding.txtLeader.setText(State.getName(snap.getString("signaler")));
 
             // We are the leader of this group
-            if (snap.getString("signaler").equals(State.getUser().getUid())) {
+            if (snap.getString("signaler").equals(UserInfo.getUid())) {
                 binding.btnAction.setText(getString(R.string.close_signal));
                 binding.btnAction.setOnClickListener(v -> closeSignal());
                 binding.btnAction.setVisibility(View.VISIBLE);
             } else if (!signal.isActive()) {
-                if (!signal.userUpvoted(State.getUser().getUid())) {
+                if (!signal.userUpvoted(UserInfo.getUid())) {
                     binding.btnAction.setText(getString(R.string.signal_upvote));
                     binding.btnAction.setOnClickListener(v -> upvote());
                 } else {
@@ -93,13 +94,13 @@ public class SignalDetailFragment extends Fragment {
     }
 
     protected void upvote() {
-        signal.addUpvote(State.getUser().getUid());
+        signal.addUpvote(UserInfo.getUid());
         binding.btnAction.setText(getString(R.string.remove_signal_upvote));
         binding.btnAction.setOnClickListener(v -> remove_upvote());
     }
 
     protected void remove_upvote() {
-        signal.removeUpvote(State.getUser().getUid());
+        signal.removeUpvote(UserInfo.getUid());
 
         binding.btnAction.setText(getString(R.string.signal_upvote));
         binding.btnAction.setOnClickListener(v -> upvote());

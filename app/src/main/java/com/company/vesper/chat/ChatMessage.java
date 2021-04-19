@@ -7,7 +7,7 @@ import com.company.vesper.dbModels.Signal;
  * Container class that holds the data relevant to a message.
  */
 public class ChatMessage {
-    private static String TAG = ChatMessage.class.getName();
+    private static final String TAG = ChatMessage.class.getName();
 
     String senderName = "";
     String senderID = "'";

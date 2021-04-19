@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 public class GroupsDetail extends Fragment {
 
-    private GroupInfo group;
+    private final GroupInfo group;
 
 
     public GroupsDetail(GroupInfo group) {
@@ -54,7 +54,7 @@ public class GroupsDetail extends Fragment {
 
 
         State.getDatabase().collection("signals")
-                .whereIn("group", Arrays.asList(new DocumentReference[] {group.getRef()}))
+                .whereIn("group", Arrays.asList(group.getRef()))
                 .get()
                 .addOnCompleteListener(task -> {
                     QuerySnapshot qSnap = task.getResult();
@@ -65,6 +65,7 @@ public class GroupsDetail extends Fragment {
 
 
 
+        if (State.getUser().getGroups().contains(group.))
         // Inflate the layout for this fragment
         return binding.getRoot();
     }

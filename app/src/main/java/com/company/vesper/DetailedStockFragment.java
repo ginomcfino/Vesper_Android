@@ -38,10 +38,10 @@ public class DetailedStockFragment extends Fragment {
     private String mParam2;
 
 
-    private String ticker;
-    private double currentPrice;
-    private double dailyChange;
-    private String percentChange;
+    private final String ticker;
+    private final double currentPrice;
+    private final double dailyChange;
+    private final String percentChange;
 
     private FragmentDetailedStockBinding binding;
 
@@ -99,11 +99,11 @@ public class DetailedStockFragment extends Fragment {
 
         if (dailyChange > 0) {
             textChange.setTextColor(Color.GREEN);
-            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
+            textChange.setText(dailyChange + "$ (" + percentChange + ")");
             AlphaVantage.makeStockChart(ticker, 30, view);
         } else {
             textChange.setTextColor(Color.RED);
-            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
+            textChange.setText(dailyChange + "$ (" + percentChange + ")");
             AlphaVantage.makeStockChart(ticker, 30, view);
 
         }

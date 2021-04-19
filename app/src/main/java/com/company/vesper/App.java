@@ -11,7 +11,7 @@ import com.company.vesper.services.FCMServiceHandler;
  * Custom App extends Application, used to handle some app level stuff like single instantiation of contexts.
  */
 public class App extends Application {
-    private static String TAG = "App";
+    private static final String TAG = "App";
     private static App _instance;
 
     @Override

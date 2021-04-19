@@ -12,7 +12,7 @@ import java.util.List;
  * Container class that holds the data relevant to a user
  */
 public class UserInfo {
-    private static String TAG = UserInfo.class.getName();
+    private static final String TAG = UserInfo.class.getName();
 
 
     static FirebaseUser user;
@@ -22,7 +22,7 @@ public class UserInfo {
     static List<String> watchlist;
 
     public UserInfo(FirebaseUser user) {
-        this.user = user;
+        UserInfo.user = user;
         // populate
         populateData();
     }

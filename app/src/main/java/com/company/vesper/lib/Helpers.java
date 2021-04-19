@@ -26,8 +26,8 @@ import static com.company.vesper.App.getContext;
 import static com.company.vesper.databinding.SignalMessageBinding.inflate;
 
 public class Helpers {
-    private static String TAG = Helpers.class.getName();
-    private static Map<Integer, Integer> Colors = new HashMap<>();
+    private static final String TAG = Helpers.class.getName();
+    private static final Map<Integer, Integer> Colors = new HashMap<>();
 
     /**
      * Helper function to switch to an activity with a delay.

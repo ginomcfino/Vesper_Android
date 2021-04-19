@@ -17,7 +17,7 @@ import com.company.vesper.databinding.FragmentNewsWebViewBinding;
  */
 public class NewsWebView extends Fragment {
 
-    private String url;
+    private final String url;
 
     public NewsWebView(String url) {
         this.url = url;

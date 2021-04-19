@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.company.vesper.databinding.FragmentHomeBinding;
 import com.company.vesper.dbModels.GroupInfo;
 import com.company.vesper.dbModels.Signal;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.services.AlphaVantage;
 import com.company.vesper.signal.SignalDisplayFragment;
@@ -75,7 +76,7 @@ public class HomeFragment extends Fragment {
         ListView listView = binding.listViewObject;
         listView.setAdapter(adapter);
 
-        List<String> tickerSymbols = State.getUser().getWatchlist();
+        List<String> tickerSymbols = UserInfo.getWatchlist();
 
         // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
         for (int i = 0; i < tickerSymbols.size(); i++) {

@@ -19,7 +19,7 @@ public class ChatLoader {
     private int unloaded_count = 0;
 
 
-    private String TAG = ChatLoader.class.getName();
+    private final String TAG = ChatLoader.class.getName();
 
     public ChatLoader() {
         lastLoadTime = Long.MAX_VALUE;

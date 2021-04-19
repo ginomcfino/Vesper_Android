@@ -31,19 +31,15 @@ public class StockNews {
             this.pictureUrl = pictureUrl;
             this.sourceName = sourceName;
 
-            if(sentiment.equals("Positive")){
-                this.sentiment = true;
-            }else{
-                this.sentiment = false;
-            }
+            this.sentiment = sentiment.equals("Positive");
 
             this.news_url = news_url;
 
         }
     }
 
-    private static String url1 = "http://128.31.25.3/stock-news/?tickers=";
-    private static String url2 = "&items=8";
+    private static final String url1 = "http://128.31.25.3/stock-news/?tickers=";
+    private static final String url2 = "&items=8";
 
     /*
         Uses Volley to make GET request with http REST interface
@@ -55,7 +51,7 @@ public class StockNews {
         HttpConnectionLibrary.sendGET(url, response -> {
             try {
                 callback.callback(new JSONObject(response));
-                Log.d("TESTING",response.toString());
+                Log.d("TESTING", response);
             } catch (JSONException e) {
                 Log.d("StockNews",e.toString());
             }

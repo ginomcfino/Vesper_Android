@@ -33,10 +33,10 @@ public class AlphaVantage {
     }
 
 
-    private static String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_DAILY&symbol=";
-    private static String url2 = "&outputsize=compact";
+    private static final String url = "http://128.31.25.3/alpha-vantage/?function=TIME_SERIES_DAILY&symbol=";
+    private static final String url2 = "&outputsize=compact";
 
-    private static String urlCurrent = "http://128.31.25.3/alpha-vantage/?function=GLOBAL_QUOTE&symbol=";
+    private static final String urlCurrent = "http://128.31.25.3/alpha-vantage/?function=GLOBAL_QUOTE&symbol=";
 
 
     /*

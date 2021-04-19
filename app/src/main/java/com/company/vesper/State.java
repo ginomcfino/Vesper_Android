@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class State {
-    private static String TAG = State.class.getName();
+    private static final String TAG = State.class.getName();
 
     private static FirebaseAuth auth;
     private static FirebaseFirestore database;
