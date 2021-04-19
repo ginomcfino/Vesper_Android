@@ -41,7 +41,11 @@ public class GroupsDetail extends Fragment {
         FragmentGroupsDetailBinding binding = FragmentGroupsDetailBinding.inflate(inflater);
 
         binding.txtGroupName.setText(group.getName());
-        binding.SignalerName.setText(group.getSignaler());
+        State.getDatabase().collection("users")
+                .document(group.getSignaler())
+                .get().addOnCompleteListener(task -> {
+                    binding.SignalerName.setText(task.getResult().getString("displayName"));
+                });
         binding.rating.setText(String.valueOf(group.getUpvote_count()));
         binding.numMembers.setText(String.valueOf(group.getNumMembers()));
 
