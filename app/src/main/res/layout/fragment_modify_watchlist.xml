@@ -11,6 +11,7 @@
         android:id="@+id/searchBar"
         android:layout_width="379dp"
         android:layout_height="62dp"
+        android:layout_margin="10dp"
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         android:queryHint="@string/search_stock_prompt">
@@ -20,6 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="7.5dp"
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         >
@@ -28,7 +30,6 @@
             android:id="@+id/aButton"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-
             android:layout_marginLeft="15sp"
             android:background="@color/active_signal"
             android:text="@string/authorize_addition"
@@ -60,6 +61,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="7.5dp"
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp">
 
@@ -105,9 +107,11 @@
     <ListView
         android:id="@+id/watchlist"
         android:layout_width="wrap_content"
-        android:layout_height="591dp"
+        android:layout_height="454dp"
+        android:layout_margin="7.5dp"
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/other_message" />
 
 </LinearLayout>
