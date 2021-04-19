@@ -40,6 +40,9 @@ public class GroupsDetail extends Fragment {
         binding.rating.setText(String.valueOf(group.getUpvote_count()));
         binding.numMembers.setText(String.valueOf(group.getNumMembers()));
 
+        binding.excellentCount.setText(String.valueOf(group.getExcellent_signals()));
+        binding.goodCount.setText(String.valueOf(group.getGood_signals()));
+
 
         // Inflate the layout for this fragment
         return binding.getRoot();
