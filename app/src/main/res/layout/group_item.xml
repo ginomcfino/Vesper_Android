@@ -10,11 +10,10 @@
         android:id="@+id/txtGroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
-        android:text="Smith 1"
+        android:text="GROUP NAME"
         app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,26 +22,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Group Description"
+        android:text="Members"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtGroupName"
         app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Signaler Name"
-        app:layout_constraintBottom_toBottomOf="@+id/txtGroupName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtGroupName"
-        app:layout_constraintTop_toTopOf="@+id/txtGroupName" />
-
-    <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/membersCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Members: 5000"

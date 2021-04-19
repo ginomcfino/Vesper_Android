@@ -36,6 +36,9 @@ public class GroupsDetail extends Fragment {
         FragmentGroupsDetailBinding binding = FragmentGroupsDetailBinding.inflate(inflater);
 
         binding.txtGroupName.setText(group.getName());
+        binding.SignalerName.setText(group.getSignaler());
+        binding.rating.setText(String.valueOf(group.getUpvote_count()));
+        binding.numMembers.setText(String.valueOf(group.getNumMembers()));
 
 
         // Inflate the layout for this fragment

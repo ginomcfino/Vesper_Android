@@ -29,6 +29,7 @@ public class GroupListAdapter extends ArrayAdapter<GroupInfo> {
 
         GroupItemBinding binding = GroupItemBinding.inflate(inflater);
         binding.txtGroupName.setText(group.getName());
+        binding.membersCount.setText(String.valueOf(group.getNumMembers()));
         String description = "";
         // TODO REMEMBER to enable this VVV, DUMMY VALUE RIGHT NOW
 //        binding.txtDescription.setText(description);
@@ -36,6 +37,7 @@ public class GroupListAdapter extends ArrayAdapter<GroupInfo> {
         binding.layout.setOnClickListener(view -> {
             GroupsDetail fragment = new GroupsDetail(group);
             MainActivity.instance.setCurrentFragment(fragment);
+
 
         });
 
