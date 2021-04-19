@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < tickerSymbols.size(); i++) {
             // add it to watchlist_array
             AlphaVantage.getCurrentStockData(tickerSymbols.get(i), stockData -> {
-                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.Name, stockData.currentPrice, stockData.dailyChange);
+                WatchListItem watchListItem = new WatchListItem(stockData.Ticker, stockData.currentPrice, stockData.dailyChange, stockData.percentChange);
                         watchlist_array.add(watchListItem);
                         adapter.notifyDataSetChanged();
             });

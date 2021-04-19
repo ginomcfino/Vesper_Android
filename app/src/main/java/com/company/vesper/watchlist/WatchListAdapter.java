@@ -41,7 +41,7 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         TextView txtChange = convertView.findViewById(R.id.txtChange);
         // Populate the data into the template view using the data object
         watchListRow.setText(item.Ticker.toString());
-        String closingPriceString = "$" + String.valueOf(item.closingPrice);
+        String closingPriceString = "$" + String.valueOf(item.currentPrice);
         txtPrice.setText(closingPriceString);
         String dailyChangeString =  "$" + String.valueOf(Helpers.formatDecimal(item.dailyChange));
         txtChange.setText(dailyChangeString);
@@ -53,7 +53,7 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
         }
 
         convertView.setOnClickListener(v -> {
-            DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker);
+            DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker, item.currentPrice, item.dailyChange, item.percentChange);
             MainActivity.instance.setCurrentFragment(fragment);
         });
 

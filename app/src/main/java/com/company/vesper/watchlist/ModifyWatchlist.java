@@ -77,13 +77,14 @@ public class ModifyWatchlist extends Fragment {
         // Loop over every ticker symbol, for each one create a watchListItem and add it to the array
         for (int i = 0; i < tickerSymbols.size(); i++) {
             // add it to watchlist_array
-            WatchListItem watchListItem = new WatchListItem(tickerSymbols.get(i), "", 0, 0);
+            WatchListItem watchListItem = new WatchListItem(tickerSymbols.get(i));
             watchlist_array.add(watchListItem);
             adapter.notifyDataSetChanged();
             AlphaVantage.getCurrentStockData(tickerSymbols.get(i), stockData -> {
                 watchListItem.Name = stockData.Name;
-                watchListItem.closingPrice = stockData.currentPrice;
+                watchListItem.currentPrice = stockData.currentPrice;
                 watchListItem.dailyChange = stockData.dailyChange;
+                watchListItem.percentChange = stockData.percentChange;
                 adapter.notifyDataSetChanged();
             });
         }
