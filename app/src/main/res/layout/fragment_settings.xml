@@ -42,6 +42,13 @@
             android:text="@string/explore_groups" />
 
         <Button
+            android:id="@+id/btnUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/user" />
+
+        <Button
             android:id="@+id/btnlogout"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
