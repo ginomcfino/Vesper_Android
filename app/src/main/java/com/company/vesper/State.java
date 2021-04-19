@@ -78,6 +78,10 @@ public class State {
         group = new GroupInfo(snapshot);
     }
 
+    public static void setGroup(GroupInfo group) {
+        this.group = group;
+    }
+
     public static String getDeviceFCMToken() {
         return deviceFCMToken;
     }

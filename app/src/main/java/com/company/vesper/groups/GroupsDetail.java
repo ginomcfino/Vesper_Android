@@ -51,7 +51,7 @@ public class GroupsDetail extends Fragment {
         binding.numMembers.setText(String.valueOf(group.getNumMembers()));
 
         binding.age.setText(Helpers.getShortTimestamp(group.getTimestamp()));
-        
+
         binding.excellentCount.setText(String.valueOf(group.getExcellent_signals()));
         binding.goodCount.setText(String.valueOf(group.getGood_signals()));
 
@@ -73,6 +73,9 @@ public class GroupsDetail extends Fragment {
         } else {
             binding.joinGroup.setOnClickListener(view -> {
                 State.getUser().joinGroup(group);
+                if (State.getGroup() == null) {
+                    State.setGroup(group);
+                }
                 binding.joinGroup.setVisibility(View.INVISIBLE);
             });
         }
