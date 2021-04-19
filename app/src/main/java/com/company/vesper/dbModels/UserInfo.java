@@ -15,11 +15,11 @@ public class UserInfo {
     private static String TAG = UserInfo.class.getName();
 
 
-    FirebaseUser user;
-    String display_name;
-    String email;
-    List<GroupInfo> groups;
-    List<String> watchlist;
+    static FirebaseUser user;
+    static String display_name;
+    static String email;
+    static List<GroupInfo> groups;
+    static List<String> watchlist;
 
     public UserInfo(FirebaseUser user) {
         this.user = user;
@@ -27,8 +27,12 @@ public class UserInfo {
         populateData();
     }
 
-    public void addToWatchlist(String Ticker) {
+    public static void addToWatchlist(String Ticker) {
         getWatchlist().add(Ticker);
+        State.getDatabase().collection("users").document(getUid()).update("watchlist", watchlist);
+    }
+    public static void removeFromWatchlist(String Ticker) {
+        getWatchlist().remove(Ticker);
         State.getDatabase().collection("users").document(getUid()).update("watchlist", watchlist);
     }
 
@@ -61,7 +65,7 @@ public class UserInfo {
         // TODO check if current user is the same as the previously logged in person.
     }
 
-    public String getUid() {
+    public static String getUid() {
         return user.getUid();
     }
 
@@ -73,7 +77,7 @@ public class UserInfo {
         return groups;
     }
 
-    public List<String> getWatchlist() {
+    public static List<String> getWatchlist() {
         return watchlist;
     }
 }
