@@ -1,9 +1,11 @@
 package com.company.vesper.dbModels;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Holds the data for a group, also some update functions to update values to the DB
@@ -17,6 +19,7 @@ public class GroupInfo {
     private final int upvote_count;
     private int excellent_signals;
     private int good_signals;
+    private long timestamp;
 
     DocumentReference ref;
 
@@ -36,6 +39,7 @@ public class GroupInfo {
 
         excellent_signals = snapshot.get("excellent_signals", Integer.class);
         good_signals = snapshot.get("good_signals", Integer.class);
+        timestamp = snapshot.get("creation_date", Timestamp.class).getSeconds();
     }
 
     public String getID() {
@@ -64,8 +68,26 @@ public class GroupInfo {
         return good_signals;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
     public DocumentReference getRef() {
         return ref;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GroupInfo groupInfo = (GroupInfo) o;
+
+        return Objects.equals(groupID, groupInfo.groupID);
+    }
+
+    @Override
+    public int hashCode() {
+        return groupID != null ? groupID.hashCode() : 0;
     }
 
     /**

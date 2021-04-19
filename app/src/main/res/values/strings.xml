@@ -57,4 +57,9 @@
     <string name="ready_delete" >Ready to Delete, Press Submit</string>
     <string name="no_group">No group</string>
     <string name="join_group">JOIN</string>
+    <string name="number_of_members">Number of members:</string>
+    <string name="rating_score">Rating Score:</string>
+    <string name="performance">PERFORMANCE</string>
+    <string name="excellent_signals_count">Excellent Signals Count:</string>
+    <string name="profitable_signals_count">Profitable Signals Count:</string>
 </resources>

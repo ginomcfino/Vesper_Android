@@ -58,6 +58,20 @@ public class Helpers {
         return date;
     }
 
+    /**
+     * Convert the time into timestamp with yyyy.MM.dd
+     * @param time
+     * @return
+     */
+    public static String getShortTimestamp(long time) {
+        // Create a calendar object that will convert the date and time value in
+        // milliseconds to date.
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("yyyy.MM.dd", cal).toString();
+        return date;
+    }
+
     public static String formatDecimal(double value) {
         DecimalFormat df = new DecimalFormat("#,###,##0.00");
         return df.format(value);

@@ -80,4 +80,20 @@ public class UserInfo {
     public static List<String> getWatchlist() {
         return watchlist;
     }
+
+    public void joinGroup(GroupInfo group) {
+        groups.add(group);
+
+        List<DocumentReference> docRefs = new ArrayList<>();
+        for(GroupInfo g : groups) {
+            docRefs.add(g.ref);
+        }
+
+        State.getDatabase().collection("users").document(getUid()).update("groups", docRefs);
+        group.ref.get().addOnCompleteListener(task -> {
+            List<DocumentReference> members = (List<DocumentReference>) task.getResult().get("members");
+            members.add(State.getDatabase().collection("users").document(getUid()));
+            group.ref.update("members", members);
+        });
+    }
 }

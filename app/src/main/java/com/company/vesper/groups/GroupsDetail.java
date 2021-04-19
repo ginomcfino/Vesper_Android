@@ -12,6 +12,7 @@ import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentGroupsDetailBinding;
 import com.company.vesper.dbModels.GroupInfo;
+import com.company.vesper.lib.Helpers;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -49,6 +50,8 @@ public class GroupsDetail extends Fragment {
         binding.rating.setText(String.valueOf(group.getUpvote_count()));
         binding.numMembers.setText(String.valueOf(group.getNumMembers()));
 
+        binding.age.setText(Helpers.getShortTimestamp(group.getTimestamp()));
+        
         binding.excellentCount.setText(String.valueOf(group.getExcellent_signals()));
         binding.goodCount.setText(String.valueOf(group.getGood_signals()));
 
@@ -65,7 +68,16 @@ public class GroupsDetail extends Fragment {
 
 
 
-        if (State.getUser().getGroups().contains(group.))
+        if (State.getUser().getGroups().contains(group)) {
+            binding.joinGroup.setVisibility(View.INVISIBLE);
+        } else {
+            binding.joinGroup.setOnClickListener(view -> {
+                State.getUser().joinGroup(group);
+                binding.joinGroup.setVisibility(View.INVISIBLE);
+            });
+        }
+
+
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
