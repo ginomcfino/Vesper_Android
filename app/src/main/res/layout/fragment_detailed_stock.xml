@@ -10,16 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNews"
+            android:layout_width="444dp"
+            android:layout_height="291dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/any_chart_view"
+            app:layout_constraintVertical_bias="1.0" />
+
         <com.anychart.AnyChartView
             android:id="@+id/any_chart_view"
             android:layout_width="match_parent"
             android:layout_height="312dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.119" >
+            app:layout_constraintVertical_bias="0.0">
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -32,60 +44,59 @@
                 android:progressTint="#E91E63" />
         </com.anychart.AnyChartView>
 
-
         <TextView
-            android:id="@+id/textViewTicker"
+            android:id="@+id/textPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="Price:"
+            android:textAlignment="textEnd"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.722" />
+            app:layout_constraintVertical_bias="0.557" />
 
         <TextView
             android:id="@+id/textViewChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="24sp"
+            android:text="+ $1.52 (2.3%)"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.528"
+            app:layout_constraintHorizontal_bias="0.836"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.721" />
+            app:layout_constraintVertical_bias="0.486" />
 
         <TextView
             android:id="@+id/textViewPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textSize="18sp"
+            android:text="$122.43"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.34"
+            app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.805" />
+            app:layout_constraintVertical_bias="0.556" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewTicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price:"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
+            android:text="AAPL"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.109"
+            app:layout_constraintHorizontal_bias="0.055"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.803" />
+            app:layout_constraintVertical_bias="0.486" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
