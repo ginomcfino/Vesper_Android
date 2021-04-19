@@ -79,5 +79,4 @@ public class EditTextDialog extends DialogFragment {
     public interface okCallback {
         void callback(String input);
     }
-
 }

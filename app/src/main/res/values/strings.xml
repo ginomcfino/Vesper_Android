@@ -44,4 +44,5 @@
     <string name="modify_watchlist">Modify Watchlist</string>
     <string name="change_bear_color">Change bear color</string>
     <string name="change_bull_color">Change bull color</string>
+    <string name="no_group">No group</string>
 </resources>

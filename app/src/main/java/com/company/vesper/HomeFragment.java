@@ -125,6 +125,10 @@ public class HomeFragment extends Fragment {
             groups.add(group.getRef());
         }
 
+        if (groups.size() == 0) {
+            return;
+        }
+
         State.getDatabase().collection("signals").whereIn("group", groups).whereEqualTo("active", true).get().addOnCompleteListener(task -> {
             QuerySnapshot snapshots = task.getResult();
             for (DocumentSnapshot doc : snapshots.getDocuments()) {

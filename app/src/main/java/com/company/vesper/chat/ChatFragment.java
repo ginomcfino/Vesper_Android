@@ -14,6 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -63,6 +64,9 @@ public class ChatFragment extends Fragment {
         if (messages == null) {
             messages = new ArrayList<>();
             chatLoader = new ChatLoader();
+            if (State.getGroup() == null) {
+                return;
+            }
             chatLoader.loadMessages(State.getGroup().getID(), m -> {
                 messages.addAll(m);
                 adapter.notifyDataSetChanged();
@@ -82,12 +86,16 @@ public class ChatFragment extends Fragment {
         adapter = new ChatMessageAdapter(Objects.requireNonNull(getContext()), messages);
         binding.listMessages.setAdapter(adapter);
 
-        binding.btnSend.setOnClickListener(v -> sendMessage());
-        binding.txtGroupName.setOnClickListener(this::showSwitchGroupsMenu);
 
-        binding.txtGroupName.setText(State.getGroup().getName());
+        if (State.getGroup() == null) {
+            binding.txtGroupName.setText(getString(R.string.no_group));
+        } else {
+            binding.txtGroupName.setText(State.getGroup().getName());
+            binding.btnSend.setOnClickListener(v -> sendMessage());
+            binding.txtGroupName.setOnClickListener(this::showSwitchGroupsMenu);
+            binding.listMessages.setOnTouchListener(this::loadListener);
+        }
 
-        binding.listMessages.setOnTouchListener(this::loadListener);
         return binding.getRoot();
     }
 

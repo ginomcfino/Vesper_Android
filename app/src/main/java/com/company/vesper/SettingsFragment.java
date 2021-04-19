@@ -32,7 +32,12 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
-        bindAllButtonListeners();
+        bindColorButtons();
+
+        binding.btnlogout.setOnClickListener(view -> {
+            Preferences.clear();
+            Helpers.switchToActivity(getContext(), 0, LoginActivity.class);
+        });
 
         return binding.getRoot();
     }
@@ -70,16 +75,4 @@ public class SettingsFragment extends Fragment {
             dialog.show(fm, "");
         });
     }
-
-    private void bindAllButtonListeners() {
-        bindColorButtons();
-
-        binding.btnlogout.setOnClickListener(view -> {
-            Preferences.clear();
-            Helpers.switchToActivity(getContext(), 0, LoginActivity.class);
-        });
-
-    }
-
-
 }

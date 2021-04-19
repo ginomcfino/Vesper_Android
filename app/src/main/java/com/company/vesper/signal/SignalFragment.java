@@ -54,6 +54,10 @@ public class SignalFragment extends Fragment {
         transaction.replace(R.id.expiredSignals, expiredSignalList, null);
         transaction.commit();
 
+        if (groups.size() == 0) {
+            return binding.getRoot();
+        }
+
         State.getDatabase().collection("signals").whereIn("group", groups).get().addOnCompleteListener(task -> {
             QuerySnapshot snapshots = task.getResult();
             for (DocumentSnapshot doc : snapshots.getDocuments()) {
