@@ -42,7 +42,6 @@ public class GroupsDetail extends Fragment {
 
         binding.excellentCount.setText(String.valueOf(group.getExcellent_signals()));
         binding.goodCount.setText(String.valueOf(group.getGood_signals()));
-        binding.
 
 
         // Inflate the layout for this fragment
