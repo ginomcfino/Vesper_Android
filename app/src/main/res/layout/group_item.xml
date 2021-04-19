@@ -13,6 +13,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
         android:text="GROUP NAME"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
