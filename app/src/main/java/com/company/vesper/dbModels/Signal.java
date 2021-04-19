@@ -23,6 +23,7 @@ public class Signal {
     private double sell;
     private double loss;
     private boolean active;
+    private String description;
     private List<String> upvoted_users;
     private DocumentReference group;
 
@@ -37,6 +38,7 @@ public class Signal {
         this.active = doc.getBoolean("active");
         this.group = doc.getDocumentReference("group");
         this.upvoted_users = (List<String>) doc.get("upvote_users");
+        this.description = doc.getString("description");
     }
 
     public String getTicker() {
