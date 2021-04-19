@@ -1,16 +1,25 @@
 package com.company.vesper;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.company.vesper.databinding.FragmentChatBinding;
 import com.company.vesper.databinding.FragmentDetailedStockBinding;
 import com.company.vesper.services.AlphaVantage;
+import com.company.vesper.services.StockNews;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,12 +39,23 @@ public class DetailedStockFragment extends Fragment {
 
 
     private String ticker;
+    private double currentPrice;
+    private double dailyChange;
+    private String percentChange;
 
     private FragmentDetailedStockBinding binding;
 
+    private RecyclerView viewNews;
+    private com.company.vesper.CustomNewsAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
-    public DetailedStockFragment(String ticker) {
+
+
+    public DetailedStockFragment(String ticker, double currentPrice, double dailyChange, String percentChange) {
         this.ticker = ticker;
+        this.currentPrice = currentPrice;
+        this.dailyChange = dailyChange;
+        this.percentChange = percentChange;
     }
 
     @Override
@@ -53,8 +73,41 @@ public class DetailedStockFragment extends Fragment {
         binding = FragmentDetailedStockBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
         AnyChartView view = binding.anyChartView;
+        view.setProgressBar(binding.progressBar);
 
-        AlphaVantage.makeStockChart(ticker,10,view);
+        TextView textTicker = binding.textViewTicker;
+        TextView textCurrentPrice = binding.textViewPrice;
+        TextView textChange = binding.textViewChange;
+
+        viewNews = binding.recyclerViewNews;
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        viewNews.setLayoutManager(mLayoutManager);
+
+        //Initialize dataSet
+        //List<StockNews.NewsItem> mData = StockNews.getNewsData("AAPL");
+
+        StockNews.getNewsData(ticker, response -> {
+            mAdapter = new com.company.vesper.CustomNewsAdapter(response);
+            viewNews.setAdapter(mAdapter);
+
+        });
+
+
+        textTicker.setText(ticker);
+
+        textCurrentPrice.setText(Double.toString(currentPrice));
+
+        if (dailyChange > 0) {
+            textChange.setTextColor(Color.GREEN);
+            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
+            AlphaVantage.makeStockChart(ticker, 30, view);
+        } else {
+            textChange.setTextColor(Color.RED);
+            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
+            AlphaVantage.makeStockChart(ticker, 30, view);
+
+        }
+
 
         return binding.getRoot();
     }

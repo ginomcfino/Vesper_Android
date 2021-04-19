@@ -17,7 +17,7 @@ import com.company.vesper.State;
 import com.company.vesper.databinding.ChatMessageLayoutLeaderBinding;
 import com.company.vesper.databinding.ChatMessageLayoutRegularBinding;
 import com.company.vesper.lib.Helpers;
-import com.company.vesper.signal.Signal;
+import com.company.vesper.dbModels.Signal;
 
 import java.util.List;
 

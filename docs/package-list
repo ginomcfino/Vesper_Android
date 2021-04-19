@@ -1,3 +1,9 @@
 com.company.vesper
+com.company.vesper.chat
+com.company.vesper.dbModels
+com.company.vesper.dialogs
 com.company.vesper.lib
+com.company.vesper.logins
 com.company.vesper.services
+com.company.vesper.signal
+com.company.vesper.watchlist

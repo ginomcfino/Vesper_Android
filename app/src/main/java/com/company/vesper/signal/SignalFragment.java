@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.company.vesper.R;
 import com.company.vesper.State;
 import com.company.vesper.databinding.FragmentSignalBinding;
+import com.company.vesper.dbModels.GroupInfo;
+import com.company.vesper.dbModels.Signal;
 import com.company.vesper.lib.Helpers;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Core signal fragment that lists all active and expired signals of groups that a user is in.
  */
 public class SignalFragment extends Fragment {
 
@@ -39,10 +40,9 @@ public class SignalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSignalBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
 
         List<DocumentReference> groups = new ArrayList<>();
-        for (State.GroupInfo group : State.getUser().getGroups()) {
+        for (GroupInfo group : State.getUser().getGroups()) {
             groups.add(group.getRef());
         }
 
@@ -52,19 +52,16 @@ public class SignalFragment extends Fragment {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.activeSignals, activeSignalList, null);
         transaction.replace(R.id.expiredSignals, expiredSignalList, null);
-
         transaction.commit();
+
+        if (groups.size() == 0) {
+            return binding.getRoot();
+        }
 
         State.getDatabase().collection("signals").whereIn("group", groups).get().addOnCompleteListener(task -> {
             QuerySnapshot snapshots = task.getResult();
             for (DocumentSnapshot doc : snapshots.getDocuments()) {
-                Signal signal = new Signal(
-                        doc.getString("ticker"),
-                        doc.getDouble("buy"),
-                        doc.getDouble("sell"),
-                        doc.getDouble("loss"),
-                        doc.getBoolean("active"),
-                        doc.getDocumentReference("group"));
+                Signal signal = new Signal(doc);
 
                 if (signal.isActive()) {
                     activeSignalList.addView(Helpers.createSignalMessage(inflater, signal, true));

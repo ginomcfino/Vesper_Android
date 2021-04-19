@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,11 +15,16 @@ import androidx.core.content.ContextCompat;
 import com.company.vesper.DetailedStockFragment;
 import com.company.vesper.MainActivity;
 import com.company.vesper.R;
+import com.company.vesper.dbModels.UserInfo;
 import com.company.vesper.lib.Helpers;
 
 import java.util.List;
 
+import io.grpc.Deadline;
+
 public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
+
+    Button deleteButton;
 
 
     public WatchListAdapter(@NonNull Context context, @NonNull List<WatchListItem> objects) {
@@ -30,32 +36,36 @@ public class WatchListAdapter extends ArrayAdapter<WatchListItem> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // We choose a watchlist item
         WatchListItem item = getItem(position);
-
+        // Inflate watchlist item fragment one by one, by this point it should already say "Loading..."
         if (convertView == null ){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.watch_list_item, parent, false);
         }
+
         // Bind the views
-        TextView watchListRow = (TextView) convertView.findViewById(R.id.stockInfo);
-        TextView txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
-        TextView txtChange = (TextView) convertView.findViewById(R.id.txtChange);
+        TextView watchListRow = convertView.findViewById(R.id.tickerView);
+        TextView txtPrice = convertView.findViewById(R.id.txtPrice);
+        TextView txtChange = convertView.findViewById(R.id.txtChange);
+        //Button deleteButton = convertView.findViewById(R.id.XButton);
+
         // Populate the data into the template view using the data object
-        // TODO: We may have to construct a data object when we have more fields to pass to the listView
-        watchListRow.setText(item.Ticker);
-        txtPrice.setText("" + item.closingPrice);
-        txtChange.setText(Helpers.formatDecimal(item.dailyChange));
+        watchListRow.setText(item.Ticker.toString());
+        String closingPriceString = "$" + String.valueOf(item.currentPrice);
+        txtPrice.setText(closingPriceString);
+        String dailyChangeString =  "$" + String.valueOf(Helpers.formatDecimal(item.dailyChange));
+        txtChange.setText(dailyChangeString);
 
         if (item.dailyChange > 0) {
-            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.active_signal));
+            txtChange.setTextColor(Helpers.getColor(R.color.active_signal));
         } else {
-            txtChange.setTextColor(ContextCompat.getColor(getContext(), R.color.expired_signal));
+            txtChange.setTextColor(Helpers.getColor(R.color.expired_signal));
         }
-        //watchListRow.setText(item.Name);
 
         convertView.setOnClickListener(v -> {
-            DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker);
+            DetailedStockFragment fragment = new DetailedStockFragment(item.Ticker, item.currentPrice, item.dailyChange, item.percentChange);
             MainActivity.instance.setCurrentFragment(fragment);
         });
 
         return convertView;
     }
+
 }

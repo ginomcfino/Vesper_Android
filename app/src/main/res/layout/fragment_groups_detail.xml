@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".groups.GroupsDetail">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="horizontal|vertical">
+
+        <TextView
+            android:id="@+id/txtGroupName"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:capitalize="characters"
+            android:gravity="center|center_vertical"
+            android:text="@string/hello_blank_fragment"
+            android:textAllCaps="true"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/joinGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/join_group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/SignalerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:drawableTop="@android:drawable/ic_menu_myplaces"
+            android:gravity="center"
+            android:text="Some Signaler Name"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtGroupName" />
+
+        <TextView
+            android:id="@+id/textView_members"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="40dp"
+            android:text="Number of memebers:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SignalerName" />
+
+        <TextView
+            android:id="@+id/numMembers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Num Members"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_members"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.811"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_members"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="20dp"
+            android:text="Rating Score:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/performance" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="999"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_rating"
+            app:layout_constraintStart_toStartOf="@+id/numMembers"
+            app:layout_constraintTop_toTopOf="@+id/textView_rating"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/performance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="?android:attr/actionModeFindDrawable"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical"
+            android:text="PERFORMANCE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_age" />
+
+        <TextView
+            android:id="@+id/textView_goodSignals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:text="Excellent Signals Count:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_numSignals" />
+
+        <TextView
+            android:id="@+id/textView_goodSignals2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:text="Profitable Signals Count:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_goodSignals" />
+
+        <TextView
+            android:id="@+id/excellentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_goodSignals"
+            app:layout_constraintStart_toStartOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/textView_goodSignals" />
+
+        <TextView
+            android:id="@+id/goodCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_goodSignals2"
+            app:layout_constraintStart_toStartOf="@+id/excellentCount"
+            app:layout_constraintTop_toTopOf="@+id/textView_goodSignals2" />
+
+        <TextView
+            android:id="@+id/textView_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="36dp"
+            android:text="Established: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_members" />
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/0/0000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_age"
+            app:layout_constraintStart_toStartOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/textView_age" />
+
+        <TextView
+            android:id="@+id/textView_numSignals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:text="Total Signals Sent:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_rating" />
+
+        <TextView
+            android:id="@+id/signalsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_numSignals"
+            app:layout_constraintStart_toStartOf="@+id/rating"
+            app:layout_constraintTop_toTopOf="@+id/textView_numSignals" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
