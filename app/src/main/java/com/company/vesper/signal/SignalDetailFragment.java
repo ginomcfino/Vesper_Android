@@ -62,17 +62,23 @@ public class SignalDetailFragment extends Fragment {
             }
         });
 
+        binding.txtDescription.setText(signal.getDescription());
         binding.layout.addView(Helpers.createSignalMessage(inflater, signal, false), 0);
 
         AlphaVantage.getCurrentStockData(signal.getTicker(), response -> {
             binding.txtPrice.setText("" + response.currentPrice);
             binding.txtChange.setText(Helpers.formatDecimal(response.dailyChange) + "%");
+
             if (response.dailyChange > 0) {
                 binding.txtChange.setTextColor(Helpers.getColor(R.color.active_signal));
             } else {
                 binding.txtChange.setTextColor(Helpers.getColor(R.color.expired_signal));
             }
         });
+
+
+        binding.anyChartView.setProgressBar(binding.progressBar);
+        AlphaVantage.makeStockChart(signal.getTicker(), 30, binding.anyChartView);
 
         return view;
     }

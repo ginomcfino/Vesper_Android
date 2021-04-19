@@ -61,6 +61,10 @@ public class Signal {
         return active;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public boolean userUpvoted(String userID) {
         return upvoted_users.contains(userID);
     }
