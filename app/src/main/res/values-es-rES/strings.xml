@@ -39,4 +39,15 @@
     <string name="invalid_input">El valor ingresado no es valido</string>
     <string name="signal_upvote">Voto a favor</string>
     <string name="remove_signal_upvote">Quitar voto a favor</string>
+    <string name="added_ticker_toast">Ticker Agregado!</string>
+    <string name="ticker_not_exist_toast">Ticker no existe!</string>
+    <string name="select_add_remove">Seleccione Agregar or Quitar</string>
+    <string name="authorize_removal">Authorize Removal</string>
+    <string name="authorize_addition">Authorize Addition</string>
+    <string name="price">Precio</string>
+    <string name="daily_change">Cambio Diario</string>
+    <string name="ticker">Ticker</string>
+    <string name="add_error">No se pudo agregar al watchlist, espere y intente otra vez</string>
+    <string name="ready_add">Listo para Agregar, Pulse Enviar</string>
+    <string name="ready_delete">Listo para Borrar, Pulse Enviar</string>
 </resources>
