@@ -46,6 +46,8 @@ public class GroupInfo {
         return signaler;
     }
 
+    public int getNumMembers() {return members.size();}
+
     public String getName() {
         return name;
     }

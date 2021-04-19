@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.company.vesper.databinding.FragmentSettingsBinding;
 import com.company.vesper.dialogs.EditTextDialog;
+import com.company.vesper.groups.ExploreGroups;
 import com.company.vesper.lib.Helpers;
 import com.company.vesper.lib.Preferences;
 import com.company.vesper.logins.LoginActivity;
@@ -34,6 +35,11 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
         bindColorButtons();
+
+        binding.btnGroups.setOnClickListener(view -> {
+            ExploreGroups fragment = new ExploreGroups();
+            MainActivity.instance.setCurrentFragment(fragment);
+        });
 
         binding.btnWatchlist.setOnClickListener(view -> {
             ModifyWatchlist fragment = new ModifyWatchlist();
