@@ -32,4 +32,16 @@
     <string name="stop_loss_message">Stop Loss@</string>
     <string name="live_signal">LIVE</string>
     <string name="expired_signal">EXPIRED</string>
+    <string name="close_signal">Close Signal</string>
+    <string name="signal_upvote">Upvote</string>
+    <string name="remove_signal_upvote">Remove Upvote</string>
+    <string name="search_stock_prompt">Search a stock!</string>
+    <string name="invalid_input">Input is not valid</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="logout">logout</string>
+    <string name="explore_groups">Explore Groups</string>
+    <string name="modify_watchlist">Modify Watchlist</string>
+    <string name="change_bear_color">Change bear color</string>
+    <string name="change_bull_color">Change bull color</string>
 </resources>

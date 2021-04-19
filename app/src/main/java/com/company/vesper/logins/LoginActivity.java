@@ -2,6 +2,7 @@ package com.company.vesper.logins;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+/**
+ * The first page the user sees. If login credentials are stored in preferences, we automatically log the users in.
+ */
 public class LoginActivity extends AppCompatActivity {
     private static String TAG = "LoginActivity";
 
@@ -32,19 +36,24 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // TODO! remove this in the future, only here for debugging.
-        login("ericjyc@bu.edu", "password");
+        if (Preferences.contains("email")) {
+            login(Preferences.getValue("email", ""), Preferences.getValue("password", ""), this);
+            binding.edtEmail.setText(Preferences.getValue("email", ""));
+            binding.edtPassword.setText(Preferences.getValue("password", ""));
+        }
     }
 
     public void login(View v) {
         if (binding.edtEmail.getText().length() == 0) {
             Toast.makeText(this, getString(R.string.blank_email), Toast.LENGTH_SHORT).show();
+            return;
         }
         if (binding.edtPassword.getText().length() == 0) {
             Toast.makeText(this, getString(R.string.blank_password), Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        login(binding.edtEmail.getText().toString(), binding.edtPassword.getText().toString());
+        login(binding.edtEmail.getText().toString(), binding.edtPassword.getText().toString(), this);
     }
 
     public void switchToSignup(View v) {
@@ -58,20 +67,24 @@ public class LoginActivity extends AppCompatActivity {
      * @param email email of user trying to login
      * @param password password of user trying to login
      */
-    protected void login(String email, String password) {
+    public static void login(String email, String password, Context context) {
         FirebaseAuth auth = State.getAuth();
         auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
+                .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         State.setUser(auth.getCurrentUser());
-                        Toast.makeText(LoginActivity.this, "Login success.",
+                        Toast.makeText(context, "Login success.",
                                 Toast.LENGTH_SHORT).show();
-                        Helpers.switchToActivity(LoginActivity.this, 1000, MainActivity.class);
+
+                        Helpers.switchToActivity(context, 1000, MainActivity.class);
+
+                        Preferences.putValue("email", email);
+                        Preferences.putValue("password", password);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                        Toast.makeText(context, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

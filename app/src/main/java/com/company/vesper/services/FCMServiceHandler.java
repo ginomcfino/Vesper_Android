@@ -1,11 +1,18 @@
 package com.company.vesper.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.company.vesper.R;
 import com.company.vesper.State;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -26,7 +33,6 @@ public class FCMServiceHandler extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
-        // TODO When a new token gets generated. We will want to push this to firestore.
     }
 
     /**
@@ -40,11 +46,11 @@ public class FCMServiceHandler extends FirebaseMessagingService {
         intent.putExtra("chatID", remoteMessage.getData().get("chatID"));
         intent.putExtra("sender", remoteMessage.getData().get("sender"));
         intent.putExtra("message", remoteMessage.getData().get("message"));
+        intent.putExtra("time", remoteMessage.getData().get("time"));
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
         super.onMessageReceived(remoteMessage);
-
     }
 
     /**
@@ -61,4 +67,12 @@ public class FCMServiceHandler extends FirebaseMessagingService {
                 });
     }
 
+
+    /**
+     * Register this device to the user. Allows for this user to receive push notifications to this device
+     * @param userID The user id of the user than owns this device.
+     */
+    public static void registerUser(String userID) {
+        State.getDatabase().collection("users").document(userID).update("device", State.getDeviceFCMToken());
+    }
 }

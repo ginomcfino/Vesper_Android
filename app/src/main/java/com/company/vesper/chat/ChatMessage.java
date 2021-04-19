@@ -1,7 +1,7 @@
 package com.company.vesper.chat;
 
 import com.company.vesper.lib.Helpers;
-import com.company.vesper.signal.Signal;
+import com.company.vesper.dbModels.Signal;
 
 public class ChatMessage {
     private static String TAG = ChatMessage.class.getName();

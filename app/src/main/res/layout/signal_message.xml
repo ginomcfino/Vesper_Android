@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/buy_signal"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/grey"
                 android:textSize="12dp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sell_message"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/grey"
                 android:textSize="12dp" />
 
             <TextView
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stop_loss_message"
-                android:textColor="@color/dark_grey"
+                android:textColor="@color/grey"
                 android:textSize="12dp" />
 
             <TextView
