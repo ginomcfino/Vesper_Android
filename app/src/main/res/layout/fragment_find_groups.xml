@@ -21,7 +21,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/group0"
             android:layout_width="match_parent"
-            android:layout_height="229dp">
+            android:layout_height="200dp">
 
             <Button
                 android:id="@+id/join0"
@@ -29,6 +29,14 @@
                 android:layout_height="wrap_content"
                 android:text="Button" />
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
