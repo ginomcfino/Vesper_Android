@@ -1,12 +1,15 @@
 package com.company.vesper;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.anychart.AnyChart;
@@ -14,12 +17,12 @@ import com.anychart.AnyChartView;
 import com.company.vesper.databinding.FragmentChatBinding;
 import com.company.vesper.databinding.FragmentDetailedStockBinding;
 import com.company.vesper.services.AlphaVantage;
+import com.company.vesper.services.StockNews;
 
-import org.w3c.dom.Text;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DetailedStockFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
@@ -34,44 +37,25 @@ public class DetailedStockFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-<<<<<<< Updated upstream
-    private FragmentDetailedStockBinding binding;
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetailedStockFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetailedStockFragment newInstance(String param1, String param2) {
-        DetailedStockFragment fragment = new DetailedStockFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public DetailedStockFragment() {
-        // Required empty public constructor
-=======
 
     private String ticker;
     private double currentPrice;
     private double dailyChange;
+    private String percentChange;
 
     private FragmentDetailedStockBinding binding;
 
+    private RecyclerView viewNews;
+    private CustomNewsAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
-    public DetailedStockFragment(String ticker, double currentPrice, double dailyChange) {
+
+
+    public DetailedStockFragment(String ticker, double currentPrice, double dailyChange, String percentChange) {
         this.ticker = ticker;
         this.currentPrice = currentPrice;
         this.dailyChange = dailyChange;
->>>>>>> Stashed changes
+        this.percentChange = percentChange;
     }
 
     @Override
@@ -95,27 +79,35 @@ public class DetailedStockFragment extends Fragment {
         TextView textCurrentPrice = binding.textViewPrice;
         TextView textChange = binding.textViewChange;
 
+        viewNews = binding.recyclerViewNews;
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        viewNews.setLayoutManager(mLayoutManager);
+
+        //Initialize dataSet
+        //List<StockNews.NewsItem> mData = StockNews.getNewsData("AAPL");
+
+        StockNews.getNewsData(ticker, response -> {
+                    mAdapter = new CustomNewsAdapter(response);
+                    viewNews.setAdapter(mAdapter);
+
+        });
 
 
         textTicker.setText(ticker);
 
         textCurrentPrice.setText(Double.toString(currentPrice));
 
-        if(dailyChange > 0){
+        if (dailyChange > 0) {
             textChange.setTextColor(Color.GREEN);
-            textChange.setText("+ $" + Double.toString(dailyChange));
+            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
             AlphaVantage.makeStockChart(ticker, true, 30, view);
-        }else {
+        } else {
             textChange.setTextColor(Color.RED);
-            textChange.setText("- $" + Double.toString(dailyChange));
+            textChange.setText(Double.toString(dailyChange) + "$ (" + percentChange + ")");
             AlphaVantage.makeStockChart(ticker, false, 30, view);
 
         }
 
-<<<<<<< Updated upstream
-        AlphaVantage.makeStockChart("TSLA",10,view);
-=======
->>>>>>> Stashed changes
 
         return binding.getRoot();
     }
