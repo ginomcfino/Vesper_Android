@@ -6,11 +6,25 @@
     android:layout_margin="20dp"
     tools:context=".groups.ExploreGroups">
 
-    <ListView
-        android:id="@+id/listGroups"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+<!--        <SearchView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="60dp">-->
+
+<!--        </SearchView>-->
+
+        <ListView
+            android:id="@+id/listGroups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-    </ListView>
+        </ListView>
+
+    </LinearLayout>
+
 </FrameLayout>
