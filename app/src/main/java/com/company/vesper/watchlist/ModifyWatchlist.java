@@ -62,28 +62,21 @@ public class ModifyWatchlist extends Fragment {
         removeButton = view.findViewById(R.id.rButton);
 
         // If clicked set the submit button to add
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = addFlag;
-                // Toast you are adding a stock
-                Toast.makeText(getActivity(), getString(R.string.ready_add), Toast.LENGTH_SHORT).show();
-            }
-
+        addButton.setOnClickListener(view1 -> {
+            flag = addFlag;
+            // Toast you are adding a stock
+            Toast.makeText(getActivity(), getString(R.string.ready_add), Toast.LENGTH_SHORT).show();
         });
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag = deleteFlag;
-                Toast.makeText(getActivity(), getString(R.string.ready_delete), Toast.LENGTH_SHORT).show();
-            }
+        removeButton.setOnClickListener(view12 -> {
+            flag = deleteFlag;
+            Toast.makeText(getActivity(), getString(R.string.ready_delete), Toast.LENGTH_SHORT).show();
         });
 
         //Instantiate search bar and get string
         SearchView simpleSearchView = view.findViewById(R.id.searchBar);
         simpleSearchView.setSubmitButtonEnabled(true);
         // Tell user what to do
-        simpleSearchView.setQueryHint("Select a Button Below before Submitting");
+        simpleSearchView.setQueryHint(getString(R.string.select_button_prompt));
         // perform set on query text listener
         simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -110,7 +103,7 @@ public class ModifyWatchlist extends Fragment {
                         // Now we wait for the real data
                         AlphaVantage.getCurrentStockData(Ticker, stockData -> {
                             if (stockData.currentPrice < 0) {
-                                Toast.makeText(getActivity(), "Not a valid ticker", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getString(R.string.invalid_ticker), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getActivity(), getString(R.string.added_ticker_toast), Toast.LENGTH_SHORT).show();
                                 watchlist_array.add(watchListItem);
