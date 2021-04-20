@@ -55,6 +55,8 @@
     <string name="add_error">Not able to add to watchlist, wait and try again</string>
     <string name="ready_add">Ready to Add, Press Submit</string>
     <string name="ready_delete">Ready to Delete, Press Submit</string>
+    <string name="group_details">Details</string>
+    <string name="list_groups">Joined Groups: </string>
     <string name="user">User Profile</string>
     <string name="no_group">No group</string>
     <string name="join_group">JOIN</string>

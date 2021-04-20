@@ -32,10 +32,9 @@
         android:id="@+id/membersCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Members: 5000"
+        android:layout_marginStart="160dp"
+        android:text="5000"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
