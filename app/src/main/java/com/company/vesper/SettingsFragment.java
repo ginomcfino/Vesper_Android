@@ -16,6 +16,7 @@ import com.company.vesper.lib.Helpers;
 import com.company.vesper.lib.Preferences;
 import com.company.vesper.logins.LoginActivity;
 import com.company.vesper.watchlist.ModifyWatchlist;
+import com.google.firebase.firestore.auth.User;
 
 /**
  * Fragment for the settings page.
@@ -43,6 +44,11 @@ public class SettingsFragment extends Fragment {
 
         binding.btnWatchlist.setOnClickListener(view -> {
             ModifyWatchlist fragment = new ModifyWatchlist();
+            MainActivity.instance.setCurrentFragment(fragment);
+        });
+
+        binding.btnUser.setOnClickListener(view -> {
+            UserProfile fragment = new UserProfile();
             MainActivity.instance.setCurrentFragment(fragment);
         });
 
